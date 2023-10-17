@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export default function AddTag() {
+
   const [data, setData] = useState({
     name: '',
   })
@@ -29,7 +30,6 @@ export default function AddTag() {
 
   return (
     <>
-      <div>Test</div>
       <input type="text" name='name' onChange={handleChange}/>
       <button onClick={handleSubmit}>Submit</button>
     </>

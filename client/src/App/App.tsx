@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import './App.css';
 
-import Home from '../pages/Home/Home';
+import AppBar from '../components/Header/Header';
+import Main from '../pages/Main/Main';
 
 function App() {
 
   return (
     <div className="App">
-      <Home />
+      <AppBar />
+      <Main />
     </div>
   );
 }
