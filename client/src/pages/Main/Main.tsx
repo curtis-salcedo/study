@@ -23,7 +23,6 @@ export default function Main() {
           <Container>
             <Typography variant="h6">
               Add:
-              <AddButton />
               <Button>Topic</Button>
               <Button>Notes</Button>
               <Button>Definition</Button>

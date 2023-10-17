@@ -14,7 +14,6 @@ from .serializers import UserSerializer, UserProfileSerializer, TagSerializer, T
 # Model imports
 from .models import User, UserProfile, Tag, Topic, Note, CodeExample, WordDefinition, UserNote
 
-# ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):
   serializer_class = UserSerializer
   queryset = User.objects.all()
