@@ -18,7 +18,10 @@ import TimerIcon from '@mui/icons-material/Timer';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
 
-const categories = [
+// Components
+import AddButton from '../Buttons/AddButton';
+
+const cats = [
   {
     id: 'Build',
     children: [
@@ -47,6 +50,35 @@ const categories = [
   },
 ];
 
+const categories = [
+  {
+    id: 'All Categories',
+    children: [
+      {
+        id: 'Categories',
+        icon: <PeopleIcon />,
+        active: true,
+      },
+      { id: 'Azure', icon: <DnsRoundedIcon /> },
+      { id: 'Cloud Development', icon: <PermMediaOutlinedIcon /> },
+      { id: 'Terraform', icon: <PublicIcon /> },
+      { id: 'Analogies', icon: <SettingsEthernetIcon /> },
+      {
+        id: 'Machine learning',
+        icon: <SettingsInputComponentIcon />,
+      },
+    ],
+  },
+  {
+    id: 'Topics',
+    children: [
+      { id: 'Analytics', icon: <SettingsIcon /> },
+      { id: 'Performance', icon: <TimerIcon /> },
+      { id: 'Test Lab', icon: <PhonelinkSetupIcon /> },
+    ],
+  },
+];
+
 const item = {
   py: '2px',
   px: 3,
@@ -62,24 +94,43 @@ const itemCategory = {
   px: 3,
 };
 
+const quickAddButtons = {
+  display: 'flex',
+  flexDirection: 'column',
+};
+
 export default function Navigator(props: DrawerProps) {
   const { ...other } = props;
 
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
+
         <ListItem sx={{ ...item, ...itemCategory, fontSize: 22, color: '#fff' }}>
-          Paperbase
+          Study Buddy
         </ListItem>
+
         <ListItem sx={{ ...item, ...itemCategory }}>
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
-          <ListItemText>Project Overview</ListItemText>
+          <ListItemText>Home</ListItemText>
         </ListItem>
-        {categories.map(({ id, children }) => (
+
+        <ListItem sx={{ color: '#fff', ...itemCategory, ...quickAddButtons }}>
+          <ListItemText>Quick Add</ListItemText>
+            <AddButton>Category</AddButton>
+            <AddButton>Topic</AddButton>
+            <AddButton>Definition</AddButton>
+            <AddButton>Notes</AddButton>
+        </ListItem>
+
+        { categories ? 
+        
+          categories.map(({ id, id: icon, children }) => 
           <Box key={id} sx={{ bgcolor: '#101F33' }}>
             <ListItem sx={{ py: 2, px: 3 }}>
+              <ListItemIcon><PeopleIcon /></ListItemIcon>
               <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
             </ListItem>
             {children.map(({ id: childId, icon, active }) => (
@@ -92,7 +143,25 @@ export default function Navigator(props: DrawerProps) {
             ))}
             <Divider sx={{ mt: 2 }} />
           </Box>
-        ))}
+        )
+        : 
+          cats.map(({ id, children }) => (
+            <Box key={id} sx={{ bgcolor: '#101F33' }}>
+              <ListItem sx={{ py: 2, px: 3 }}>
+                <ListItemText sx={{ color: '#fff' }}>{id}</ListItemText>
+              </ListItem>
+              {children.map(({ id: childId, icon, active }) => (
+                <ListItem disablePadding key={childId}>
+                  <ListItemButton selected={active} sx={item}>
+                    <ListItemIcon>{icon}</ListItemIcon>
+                    <ListItemText>{childId}</ListItemText>
+                  </ListItemButton>
+                </ListItem>
+              ))}
+              <Divider sx={{ mt: 2 }} />
+            </Box>
+          ))
+        }
       </List>
     </Drawer>
   );

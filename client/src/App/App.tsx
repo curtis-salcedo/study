@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import './App.css';
 
-import PaperBase from '../pages/Paperbase/Paperbase';
+import Main from '../pages/Main/Main';
 
 function App() {
 
   return (
     <div className="App">
-      <PaperBase />
+      <Main />
     </div>
   );
 }

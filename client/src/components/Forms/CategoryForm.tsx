@@ -12,19 +12,8 @@ import {
 
 export default function CategoryForm() {
   
-      return (
-        <Box>
-          <Box position="static" sx={{height:'sm'}}>
-            <Container>
-              <Typography variant="h6">
-                Add:
-                <Button>Topic</Button>
-                <Button>Notes</Button>
-                <Button>Definition</Button>
-                <Button>Concept</Button>
-              </Typography>
-            </Container>
-          </Box>
-        </Box>
-      );
+  return (
+    
+    <div>CategoryForm</div>
+  );
 }

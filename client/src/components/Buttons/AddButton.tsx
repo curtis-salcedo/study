@@ -8,30 +8,7 @@ import {
 } from '@mui/material';
 
 export default function AddButton({ children }: any) {
-
-  const [data, setData] = useState({
-    name: '',
-  })
-
-  const handleChange = (event: any) => {
-    setData({
-      ...data,
-      [event.target.name]: event.target.value
-    })
-    console.log(data)
-  }
-
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    axios.post('http://localhost:8000/tags/', data)
-      .then(res => {
-        console.log(res)
-      })
-      .catch(err => {
-        console.log(err)
-      });
-    console.log(data)
-  }  
+  const [open, setOpen] = useState(false);
 
   const handleClick = (e: any) => {
     e.preventDefault();

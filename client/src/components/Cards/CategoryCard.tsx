@@ -1,29 +1,38 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
+
+// Styles
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Paper,
+  Grid,
+  Button,
+  TextField,
+  Tooltip,
+  IconButton,
+
+} from '@mui/material';
+
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
-// Components
-import PrimaryCard from '../../components/Cards/PrimaryCard';
-
-
-export default function Content() {
+export default function CategoryCard() {
   return (
-    <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
+    <Paper sx={{ maxWidth: 1260, margin: 'auto', overflow: 'hidden' }}>
+
       <AppBar
         position="static"
         color="default"
         elevation={0}
         sx={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
       >
+      {/* This is basically the paper header */}
+        <Toolbar>
+          <Grid container spacing={2} alignItems="center">
+            <Typography>Category Name Here</Typography>
+          </Grid>
+        </Toolbar>
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item>
@@ -32,7 +41,7 @@ export default function Content() {
             <Grid item xs>
               <TextField
                 fullWidth
-                placeholder="Search by email address, phone number, or user UID"
+                placeholder="Search for a topic within this category"
                 InputProps={{
                   disableUnderline: true,
                   sx: { fontSize: 'default' },
@@ -42,7 +51,7 @@ export default function Content() {
             </Grid>
             <Grid item>
               <Button variant="contained" sx={{ mr: 1 }}>
-                Add user
+                Add Whatever Is Open
               </Button>
               <Tooltip title="Reload">
                 <IconButton>
@@ -52,11 +61,13 @@ export default function Content() {
             </Grid>
           </Grid>
         </Toolbar>
-
       </AppBar>
+
+    {/* This is where the breakdown of the Category will go */}
       <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
-        No users for this project yet
+        There are not topics for this category yet, they will display as cards here if needed.
       </Typography>
+
     </Paper>
   );
 }
