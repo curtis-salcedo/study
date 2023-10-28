@@ -99,8 +99,10 @@ const quickAddButtons = {
   flexDirection: 'column',
 };
 
-export default function Navigator(props: DrawerProps) {
+export default function Navigator(props) {
   const { ...other } = props;
+
+  console.log(props)
 
   return (
     <Drawer variant="permanent" {...other}>

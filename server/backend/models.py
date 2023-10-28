@@ -26,6 +26,10 @@ class Topic(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    url = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.category.name + " - " + self.name
 
 # Tag Model
 class Tag(models.Model):

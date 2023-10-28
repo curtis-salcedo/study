@@ -11,11 +11,15 @@ import {
   TextField,
   Tooltip,
   IconButton,
+  Box,
 
 } from '@mui/material';
 
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
+
+// Component
+import TopicCard from './TopicCard';
 
 export default function CategoryCard() {
   return (
@@ -30,7 +34,7 @@ export default function CategoryCard() {
       {/* This is basically the paper header */}
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
-            <Typography>Category Name Here</Typography>
+            <Typography>Category Name</Typography>
           </Grid>
         </Toolbar>
         <Toolbar>
@@ -51,7 +55,7 @@ export default function CategoryCard() {
             </Grid>
             <Grid item>
               <Button variant="contained" sx={{ mr: 1 }}>
-                Add Whatever Is Open
+                Add Topic
               </Button>
               <Tooltip title="Reload">
                 <IconButton>
@@ -63,9 +67,11 @@ export default function CategoryCard() {
         </Toolbar>
       </AppBar>
 
+    {/* This is where the Topic Links within the active category will go */}
+
     {/* This is where the breakdown of the Category will go */}
       <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
-        There are not topics for this category yet, they will display as cards here if needed.
+        There are no topics for this category yet, they will display as cards here if needed.
       </Typography>
 
     </Paper>

@@ -1,10 +1,12 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import Button from '@mui/material/Button';
 
 // Pages
 import Content from '../Content/Content';
@@ -13,6 +15,8 @@ import Content from '../Content/Content';
 import Navigator from '../../components/Navigator/Navigator';
 import Header from '../../components/Header/Header';
 import CategoryCard from '../../components/Cards/CategoryCard';
+import TopicCard from '../../components/Cards/TopicCard';
+
 
 function Copyright() {
   return (
@@ -172,12 +176,32 @@ theme = {
 const drawerWidth = 256;
 
 export default function Paperbase() {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const [activeChoice, setActiveChoice] = useState("null");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const handleActiveChoice = () => {
+    console.log('active choice clicked')
+  }
+
+  const handleTopic = () => {
+    setActiveChoice("Topic")
+  }
+  const handleCategory = () => {
+    setActiveChoice("Category")
+  }
+  const handleForm = () => {
+    setActiveChoice("Form")
+  }
+  
+  useEffect(() => {
+    console.log(activeChoice)
+  } , [activeChoice])
 
   return (
     <ThemeProvider theme={theme}>
@@ -191,6 +215,7 @@ export default function Paperbase() {
           {isSmUp ? null : (
             <Navigator
               PaperProps={{ style: { width: drawerWidth } }}
+              // ChoiceProps={{ handleActiveChoice }}
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
@@ -206,13 +231,20 @@ export default function Paperbase() {
 
           <Header onDrawerToggle={handleDrawerToggle} />
 
-          {/* <Box component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}>
-            <PrimaryCard />
-          </Box> */}
 
-          <Box component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}>
-            <CategoryCard />
-          </Box>
+        {/* This is where the active selection will go */}
+          <Button id="Topic" onClick={handleTopic} >Topic</Button>
+          <Button onClick={handleCategory} name="Category">Category</Button>
+          <Button onClick={handleForm} name="Note">Form</Button>
+          
+          {activeChoice ? (
+            <Box
+              component="main"
+              sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
+            >
+              Add the active choice here
+            </Box>
+          ) : null}
 
           <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
             <Copyright />

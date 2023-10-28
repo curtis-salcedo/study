@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -16,11 +16,7 @@ import Typography from '@mui/material/Typography';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
-interface HeaderProps {
-  onDrawerToggle: () => void;
-}
-
-export default function Header(props: HeaderProps) {
+export default function Header(props) {
   const { onDrawerToggle } = props;
 
   return (
@@ -74,7 +70,6 @@ export default function Header(props: HeaderProps) {
         </Toolbar>
       </AppBar>
 
-
     {/* This area is the header for the main page. It will contain the active category: */}
       <AppBar
         component="div"
@@ -120,7 +115,6 @@ export default function Header(props: HeaderProps) {
           <Tab label="Definition" />
           <Tab label="Concept" />
         </Tabs>
-
       </AppBar>
     </React.Fragment>
   );
