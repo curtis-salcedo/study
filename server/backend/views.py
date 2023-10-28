@@ -9,10 +9,10 @@ from rest_framework import viewsets, status
 import json
 
 # Serializer imports
-from .serializers import UserSerializer, UserProfileSerializer, TagSerializer, TopicSerializer, NoteSerializer, CodeExampleSerializer, WordDefinitionSerializer, UserNoteSerializer
+from .serializers import UserSerializer, UserProfileSerializer, TagSerializer, TopicSerializer, NoteSerializer, CodeExampleSerializer, WordDefinitionSerializer, UserNoteSerializer, CategorySerializer
 
 # Model imports
-from .models import User, UserProfile, Tag, Topic, Note, CodeExample, WordDefinition, UserNote
+from .models import User, UserProfile, Tag, Topic, Note, CodeExample, WordDefinition, UserNote, Category
 
 class UserViewSet(viewsets.ModelViewSet):
   serializer_class = UserSerializer
@@ -45,3 +45,67 @@ class TagsViewSet(viewsets.ModelViewSet):
 class UserNoteViewSet(viewsets.ModelViewSet):
   serializer_class = UserNoteSerializer
   queryset = UserNote.objects.all()
+
+class CategoryViewSet(viewsets.ModelViewSet):
+  serializer_class = CategorySerializer
+  queryset = Category.objects.all()
+
+class AnalogyViewSet(viewsets.ModelViewSet):
+  serializer_class = UserNoteSerializer
+  queryset = UserNote.objects.all()
+
+@api_view(['POST'])
+def add_category(request):
+  print(request.data)
+  serializer = CategorySerializer(data=request.data)
+  if serializer.is_valid():
+    serializer.save()
+  return Response(serializer.data)
+
+@api_view(['POST'])
+def add_topic(request):
+  print(request.data)
+  serializer = TopicSerializer(data=request.data)
+  if serializer.is_valid():
+    serializer.save()
+  return Response(serializer.data)
+
+@api_view(['POST'])
+def add_tag(request):
+  print(request.data)
+  serializer = TagSerializer(data=request.data)
+  if serializer.is_valid():
+    serializer.save()
+  return Response(serializer.data)
+
+@api_view(['POST'])
+def add_note(request):
+  print(request.data)
+  serializer = NoteSerializer(data=request.data)
+  if serializer.is_valid():
+    serializer.save()
+  return Response(serializer.data)
+
+@api_view(['POST'])
+def add_code_example(request):
+  print(request.data)
+  serializer = CodeExampleSerializer(data=request.data)
+  if serializer.is_valid():
+    serializer.save()
+  return Response(serializer.data)
+
+@api_view(['POST'])
+def add_word_definition(request):
+  print(request.data)
+  serializer = WordDefinitionSerializer(data=request.data)
+  if serializer.is_valid():
+    serializer.save()
+  return Response(serializer.data)
+
+@api_view(['POST'])
+def add_analogy(request):
+  print(request.data)
+  serializer = UserNoteSerializer(data=request.data)
+  if serializer.is_valid():
+    serializer.save()
+  return Response(serializer.data)

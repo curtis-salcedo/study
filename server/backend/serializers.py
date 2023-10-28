@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import User, Topic, Tag, Note, CodeExample, WordDefinition, UserNote, UserProfile
+from .models import User, Topic, Tag, Note, CodeExample, WordDefinition, UserNote, UserProfile, Category, Analogy
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,6 +15,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
+        fields = ['name', 'description']
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
         fields = ['name', 'description']
 
 class TopicSerializer(serializers.ModelSerializer):
@@ -42,3 +47,7 @@ class UserNoteSerializer(serializers.ModelSerializer):
         model = UserNote
         fields = ['user', 'note', 'content']
 
+class AnalogySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Analogy
+        fields = ['topic', 'title', 'description', 'analogy', 'tags']

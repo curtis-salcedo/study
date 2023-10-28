@@ -53,7 +53,7 @@ export default function Content() {
 
       </AppBar>
       <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
-        No users for this project yet
+        This is the main Content.jsx file that will house a special type of view to see most recent additions and topics.
       </Typography>
     </Paper>
   );

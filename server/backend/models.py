@@ -9,6 +9,7 @@ class User(models.Model):
     username = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
+    is_staff = models.BooleanField(default=False)
 
     def __str__(self):
         return self.username
@@ -71,4 +72,6 @@ class Analogy(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    tags = models.ManyToManyField(Tag)
+
+    def __str__(self):
+        return self.title + " - " + self.topic.name

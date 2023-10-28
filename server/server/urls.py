@@ -30,13 +30,36 @@ router.register(r'notes', views.NoteViewSet)
 router.register(r'codeexamples', views.CodeExampleViewSet)
 router.register(r'worddefinitions', views.WordDefinitionViewSet)
 router.register(r'usernotes', views.UserNoteViewSet)
+router.register(r'category', views.CategoryViewSet)
+router.register(r'analogy', views.AnalogyViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
 
     # path('users/', include('users.urls')),
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    # Category Paths
+    path('api/add_category/', views.add_category),
+
+    # Topic Paths
+    path('api/add_topic/', views.add_topic),
+
+    # Tag Paths
+    path('api/add_tag/', views.add_tag),
+
+    # Note Paths
+    path('api/add_note/', views.add_note),
+
+    # Code Example Paths
+    path('api/add_code_example/', views.add_code_example),
+
+    # Word Definition Paths
+    path('api/add_word_definition/', views.add_word_definition),
+
+    # Analogy Paths
+    path('api/add_analogy/', views.add_analogy),
 ]

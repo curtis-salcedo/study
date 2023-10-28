@@ -108,16 +108,6 @@ const quickAddButtons = {
 export default function Navigator(props) {
   const { ...other } = props;
   const { activeChoice, setActiveChoice } = useContext(DataContext);
-  console.log('activeChoice in Navigator', activeChoice)
-
-  const handleClick = (e, name) => {
-    setActiveChoice(name)
-    console.log(name)
-  }
-
-  useEffect(() => {
-    console.log(activeChoice)
-  }, [activeChoice])
 
   return (
     <Drawer variant="permanent" {...other}>
@@ -135,28 +125,11 @@ export default function Navigator(props) {
 
         <ListItem sx={{ color: '#fff', ...itemCategory, ...quickAddButtons }}>
           <ListItemText>Quick Add</ListItemText>
-          <Button
-            color="primary"
-            disabled={false}
-            size="medium"
-            variant="outlined" 
-            onClick={ (e) => handleClick(e, "Category")}>
-            Category</Button>
-            <Button
-            color="primary"
-            disabled={false}
-            size="medium"
-            variant="outlined" onClick={ (e) => handleClick(e, "Topic")}>Topic</Button>
-            <Button
-            color="primary"
-            disabled={false}
-            size="medium"
-            variant="outlined" onClick={ (e) => handleClick(e, "Definition")}>Definition</Button>
-            <Button
-            color="primary"
-            disabled={false}
-            size="medium"
-            variant="outlined" onClick={ (e) => handleClick(e, "Notes")}>Notes</Button>
+          <AddButton name="Category"/>
+          <AddButton name="Topic"/>
+          <AddButton name="Definition"/>
+          <AddButton name="Notes"/>
+          <AddButton name="Analogy"/>
         </ListItem>
 
         { categories ? 

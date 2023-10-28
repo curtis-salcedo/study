@@ -19,6 +19,12 @@ import Navigator from '../../components/Navigator/Navigator';
 import Header from '../../components/Header/Header';
 import CategoryCard from '../../components/Cards/CategoryCard';
 import TopicCard from '../../components/Cards/TopicCard';
+import DefinitionCard from '../../components/Cards/DefinitionCard';
+import CategoryForm from '../../components/Forms/CategoryForm';
+import TopicForm from '../../components/Forms/TopicForm';
+import DefinitionForm from '../../components/Forms/DefinitionForm';
+import NoteForm from '../../components/Forms/NoteForm';
+import AnalogyForm from '../../components/Forms/AnalogyForm';
 
 
 function Copyright() {
@@ -185,12 +191,23 @@ export default function Main() {
     setMobileOpen(!mobileOpen);
   };
   const { activeChoice, setActiveChoice } = useContext(DataContext);
+  const [ mainContent, setMainContent ] = useState(null);
 
-  console.log('activeChoice in Main.jsx', activeChoice)
-  
   useEffect(() => {
-    console.log(activeChoice)
-  } , [activeChoice])
+    if (activeChoice === 'Category') {
+      setMainContent(<CategoryForm />)
+    } else if (activeChoice === 'Topic') {
+      setMainContent(<TopicForm />)
+    } else if (activeChoice === 'Definition') {
+      setMainContent(<DefinitionForm />)
+    } else if (activeChoice === 'Notes') {
+      setMainContent(<NoteForm />)
+    } else if (activeChoice === 'Analogy') {
+      setMainContent(<AnalogyForm />)
+    } else {
+      setMainContent(<Content />)
+    }
+  }, [activeChoice])
 
   return (
     <ThemeProvider theme={theme}>
@@ -225,7 +242,7 @@ export default function Main() {
             component="main"
             sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
             >
-            There is an activeChoice selected {activeChoice}
+            {mainContent}
           </Box>
         : 
           <Box

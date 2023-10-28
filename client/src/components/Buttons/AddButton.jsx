@@ -1,15 +1,18 @@
 import React from 'react';
-import { useState } from 'react';
-import axios from 'axios';
+import { useState, useEffect, useContext } from 'react';
 
 import {
   Button,
   Typography,
 } from '@mui/material';
 
-export default function AddButton({ name, setActiveChoice }) {
-  const [open, setOpen] = useState(false);
+// Utilities
+import { DataContext } from '../../utilities/DataContext';
 
+export default function AddButton({ name }) {
+  const [open, setOpen] = useState(false);
+  const { activeChoice, setActiveChoice } = useContext(DataContext);
+  console.log('activeChoice in AddButton', activeChoice)
 
   return (
     <Button

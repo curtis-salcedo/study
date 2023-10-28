@@ -10,14 +10,18 @@ import {
   Container,
   FormControl,
   TextField,
+  MenuItem,
 
 } from '@mui/material';
 
-export default function CategoryForm() {
+
+export default function AnalogyForm() {
   const [ formData, setFormData ] = useState({
     name: '',
     description: '',
   });
+
+  // Fetch all the select options by getting all Topics
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +36,7 @@ export default function CategoryForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('handleSubmit', formData);
-    axios.post('http://localhost:8000/api/add_category/',  formData )
+    axios.post('http://localhost:8000/api/add_analogy/',  formData )
       .then(res => console.log(res))
       .catch(err => console.log(err));
   }
@@ -49,9 +53,26 @@ export default function CategoryForm() {
 
       <div>
         <TextField
-          name="name"
+          name="topic"
+          id="outlined-select-currency"
+          select
+          label="Topic"
+          onChange={handleChange}
+        >
+          <MenuItem key={1} value={'Topic 1'}>
+            Topic 1
+          </MenuItem>
+          <MenuItem key={2} value={'Topic 2'}>
+            Topic 2
+          </MenuItem>
+        </TextField>
+      </div>
+
+      <div>
+        <TextField
+          name="title"
           id="outlined-basic"
-          label="Outlined"
+          label="Title"
           variant="outlined"
           onChange={handleChange}
         />
@@ -61,7 +82,7 @@ export default function CategoryForm() {
         <TextField
           name="description"
           id="outlined-multiline-flexible"
-          label="Multiline"
+          label="Analogy Description"
           multiline
           minRows={6}
           maxRows={12}
