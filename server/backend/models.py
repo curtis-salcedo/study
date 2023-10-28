@@ -13,10 +13,19 @@ class User(models.Model):
     def __str__(self):
         return self.username
     
+class Category(models.Model):
+    category_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+    
 # Topic Model
 class Topic(models.Model):
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 # Tag Model
 class Tag(models.Model):
@@ -53,3 +62,9 @@ class UserNote(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     completed_notes = models.ManyToManyField(Note)
+
+class Analogy(models.Model):
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    tags = models.ManyToManyField(Tag)

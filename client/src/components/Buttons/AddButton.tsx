@@ -2,7 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 
-export default function AddTag() {
+import {
+  Button,
+  Typography,
+} from '@mui/material';
+
+export default function AddButton({ children }: any) {
 
   const [data, setData] = useState({
     name: '',
@@ -28,10 +33,20 @@ export default function AddTag() {
     console.log(data)
   }  
 
+  const handleClick = (e: any) => {
+    e.preventDefault();
+    console.log(children)
+  }
+
   return (
-    <>
-      <input type="text" name='name' onChange={handleChange}/>
-      <button onClick={handleSubmit}>Submit</button>
-    </>
+    <Button
+      color="primary"
+      disabled={false}
+      size="medium"
+      variant="outlined"
+      onClick={ (e) => handleClick(e) }
+    >
+      {children}
+    </Button>
   )
 }

@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react';
 import './App.css';
 
-import AppBar from '../components/Header/Header';
-import Main from '../pages/Main/Main';
+import PaperBase from '../pages/Paperbase/Paperbase';
 
 function App() {
 
   return (
     <div className="App">
-      <AppBar />
-      <Main />
+      <PaperBase />
     </div>
   );
 }
