@@ -7,13 +7,9 @@ import {
   Typography,
 } from '@mui/material';
 
-export default function AddButton({ children }: any) {
+export default function AddButton({ name, setActiveChoice }) {
   const [open, setOpen] = useState(false);
 
-  const handleClick = (e: any) => {
-    e.preventDefault();
-    console.log(children)
-  }
 
   return (
     <Button
@@ -21,9 +17,11 @@ export default function AddButton({ children }: any) {
       disabled={false}
       size="medium"
       variant="outlined"
-      onClick={ (e) => handleClick(e) }
+      onClick={ () => {
+        setActiveChoice(name)
+      }}
     >
-      {children}
+      {name}
     </Button>
   )
 }

@@ -12,8 +12,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 // Components
-import PrimaryCard from '../../components/Cards/PrimaryCard';
-
 
 export default function Content() {
   return (

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useState, useEffect, useContext } from 'react';
+
 import Divider from '@mui/material/Divider';
 import Drawer, { DrawerProps } from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -17,6 +19,10 @@ import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputCompone
 import TimerIcon from '@mui/icons-material/Timer';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
+import Button from '@mui/material/Button';
+
+// Utilities
+import { DataContext } from '../../utilities/DataContext';
 
 // Components
 import AddButton from '../Buttons/AddButton';
@@ -101,13 +107,21 @@ const quickAddButtons = {
 
 export default function Navigator(props) {
   const { ...other } = props;
+  const { activeChoice, setActiveChoice } = useContext(DataContext);
+  console.log('activeChoice in Navigator', activeChoice)
 
-  console.log(props)
+  const handleClick = (e, name) => {
+    setActiveChoice(name)
+    console.log(name)
+  }
+
+  useEffect(() => {
+    console.log(activeChoice)
+  }, [activeChoice])
 
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
-
         <ListItem sx={{ ...item, ...itemCategory, fontSize: 22, color: '#fff' }}>
           Study Buddy
         </ListItem>
@@ -121,14 +135,31 @@ export default function Navigator(props) {
 
         <ListItem sx={{ color: '#fff', ...itemCategory, ...quickAddButtons }}>
           <ListItemText>Quick Add</ListItemText>
-            <AddButton>Category</AddButton>
-            <AddButton>Topic</AddButton>
-            <AddButton>Definition</AddButton>
-            <AddButton>Notes</AddButton>
+          <Button
+            color="primary"
+            disabled={false}
+            size="medium"
+            variant="outlined" 
+            onClick={ (e) => handleClick(e, "Category")}>
+            Category</Button>
+            <Button
+            color="primary"
+            disabled={false}
+            size="medium"
+            variant="outlined" onClick={ (e) => handleClick(e, "Topic")}>Topic</Button>
+            <Button
+            color="primary"
+            disabled={false}
+            size="medium"
+            variant="outlined" onClick={ (e) => handleClick(e, "Definition")}>Definition</Button>
+            <Button
+            color="primary"
+            disabled={false}
+            size="medium"
+            variant="outlined" onClick={ (e) => handleClick(e, "Notes")}>Notes</Button>
         </ListItem>
 
         { categories ? 
-        
           categories.map(({ id, id: icon, children }) => 
           <Box key={id} sx={{ bgcolor: '#101F33' }}>
             <ListItem sx={{ py: 2, px: 3 }}>

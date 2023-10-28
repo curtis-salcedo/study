@@ -21,8 +21,6 @@ export default function Header(props) {
 
   return (
     <React.Fragment>
-
-    {/* This area is the header for the drawer and top of desktop header: */}
       <AppBar color="primary" position="sticky" elevation={0}>
         <Toolbar>
           <Grid container spacing={1} alignItems="center">
@@ -69,8 +67,6 @@ export default function Header(props) {
           </Grid>
         </Toolbar>
       </AppBar>
-
-    {/* This area is the header for the main page. It will contain the active category: */}
       <AppBar
         component="div"
         color="primary"
@@ -105,8 +101,6 @@ export default function Header(props) {
           </Grid>
         </Toolbar>
       </AppBar>
-
-    {/* Tabs to navigate with a category on the main page */}
       <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
         <Tabs value={0} textColor="inherit">
           <Tab label="Category" />

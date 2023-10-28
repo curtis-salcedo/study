@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,6 +7,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
+
+// Utilities
+import { DataContext } from '../../utilities/DataContext';
 
 // Pages
 import Content from '../Content/Content';
@@ -175,29 +178,15 @@ theme = {
 
 const drawerWidth = 256;
 
-export default function Paperbase() {
+export default function Main() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
-
-  const [activeChoice, setActiveChoice] = useState("null");
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const { activeChoice, setActiveChoice } = useContext(DataContext);
 
-  const handleActiveChoice = () => {
-    console.log('active choice clicked')
-  }
-
-  const handleTopic = () => {
-    setActiveChoice("Topic")
-  }
-  const handleCategory = () => {
-    setActiveChoice("Category")
-  }
-  const handleForm = () => {
-    setActiveChoice("Form")
-  }
+  console.log('activeChoice in Main.jsx', activeChoice)
   
   useEffect(() => {
     console.log(activeChoice)
@@ -215,7 +204,6 @@ export default function Paperbase() {
           {isSmUp ? null : (
             <Navigator
               PaperProps={{ style: { width: drawerWidth } }}
-              // ChoiceProps={{ handleActiveChoice }}
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
@@ -229,29 +217,30 @@ export default function Paperbase() {
 
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
 
-          <Header onDrawerToggle={handleDrawerToggle} />
-
-
-        {/* This is where the active selection will go */}
-          <Button id="Topic" onClick={handleTopic} >Topic</Button>
-          <Button onClick={handleCategory} name="Category">Category</Button>
-          <Button onClick={handleForm} name="Note">Form</Button>
-          
-          {activeChoice ? (
-            <Box
-              component="main"
-              sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
+        <Header onDrawerToggle={handleDrawerToggle} />
+        
+      {/* This is where the active selection will go */}
+        {activeChoice ? 
+          <Box
+            component="main"
+            sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
             >
-              Add the active choice here
-            </Box>
-          ) : null}
+            There is an activeChoice selected {activeChoice}
+          </Box>
+        : 
+          <Box
+          component="main"
+          sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
+          >
+            Add the activeChoice here
+          </Box>
+        }
 
           <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
             <Copyright />
           </Box>
-          
-        </Box>
 
+        </Box>
       </Box>
     </ThemeProvider>
   );
