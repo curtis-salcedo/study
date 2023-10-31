@@ -107,7 +107,7 @@ const quickAddButtons = {
 
 export default function Navigator(props) {
   const { ...other } = props;
-  const { activeChoice, setActiveChoice } = useContext(DataContext);
+  const { activeChoice, setActiveChoice, formSelected, setFormSelected } = useContext(DataContext);
 
   return (
     <Drawer variant="permanent" {...other}>

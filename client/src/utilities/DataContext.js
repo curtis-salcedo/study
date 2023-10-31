@@ -1,17 +1,32 @@
 import React, { createContext, useEffect, useState } from "react";
 
+import axios from 'axios';
+
 export const DataContext = createContext();
 
 export const DataProvider = (props) => {
+  const [ formSelected, setFormSelected ] = useState('');
   const [activeChoice, setActiveChoice] = useState([]);
+  const [ categoryData, setCategoryData ] = useState([]);
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  const getCategory = async () => {
+    axios.get('http://localhost:8000/api/category/')
+      .then((response) => {
+        setCategoryData(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    };
+
   const fetchData = async () => {
     let user;
     try {
+      getCategory();
       // user = await getUser();
       // setUser(user);
     } catch (err) {
@@ -24,6 +39,10 @@ export const DataProvider = (props) => {
       value={{
         activeChoice: activeChoice || '',
         setActiveChoice,
+        formSelected: formSelected || '',
+        setFormSelected,
+        categoryData: categoryData || null,
+        setCategoryData,
         }}
       >
       {props.children}

@@ -190,24 +190,37 @@ export default function Main() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const { activeChoice, setActiveChoice } = useContext(DataContext);
+  const { activeChoice, setActiveChoice, formSelected, setFormSelected } = useContext(DataContext);
   const [ mainContent, setMainContent ] = useState(null);
 
-  useEffect(() => {
+  const [ form, setForm ] = useState(null);
+  const [ showForm, setShowForm ] = useState(false);
+
+  // Function to populate the correct form based on user choice
+  const getForm = (activeChoice) => {
+    activeChoice? setShowForm(true) : setShowForm(false);
     if (activeChoice === 'Category') {
-      setMainContent(<CategoryForm />)
+      setForm(<CategoryForm showForm={showForm} setShowForm={setShowForm} />)
     } else if (activeChoice === 'Topic') {
-      setMainContent(<TopicForm />)
+      setForm(<TopicForm />)
     } else if (activeChoice === 'Definition') {
-      setMainContent(<DefinitionForm />)
+      setForm(<DefinitionForm />)
     } else if (activeChoice === 'Notes') {
-      setMainContent(<NoteForm />)
+      setForm(<NoteForm />)
     } else if (activeChoice === 'Analogy') {
-      setMainContent(<AnalogyForm />)
+      setForm(<AnalogyForm />)
     } else {
-      setMainContent(<Content />)
+      setForm(<Content />)
+      setShowForm(false);
     }
-  }, [activeChoice])
+  }
+
+  useEffect(() => {
+    setMainContent(<Content />)
+    if (formSelected) {
+      getForm(formSelected);
+    }
+  }, [formSelected])
 
   return (
     <ThemeProvider theme={theme}>
@@ -237,7 +250,16 @@ export default function Main() {
         <Header onDrawerToggle={handleDrawerToggle} />
         
       {/* This is where the active selection will go */}
-        {activeChoice ? 
+        {formSelected ? 
+          <Box
+            component="main"
+            sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
+            >
+            {form}
+          </Box>
+        : null }
+
+        {mainContent ? 
           <Box
             component="main"
             sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
@@ -249,7 +271,7 @@ export default function Main() {
           component="main"
           sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
           >
-            Add the activeChoice here
+            There is no main content
           </Box>
         }
 

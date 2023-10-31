@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 
 // Component Imports
@@ -13,7 +13,11 @@ import {
 
 } from '@mui/material';
 
-export default function CategoryForm() {
+// Utilities
+import { DataContext } from '../../utilities/DataContext';
+
+export default function CategoryForm({ showForm, setShowForm }) {
+  const { formSelected, setFormSelected } = useContext(DataContext);
   const [ formData, setFormData ] = useState({
     name: '',
     description: '',
@@ -28,13 +32,16 @@ export default function CategoryForm() {
     console.log('handleChange', formData)
   }
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('handleSubmit', formData);
     axios.post('http://localhost:8000/api/add_category/',  formData )
       .then(res => console.log(res))
       .catch(err => console.log(err));
+  }
+
+  const handleClose = () => {
+    setFormSelected(false)
   }
 
   return (
@@ -70,6 +77,9 @@ export default function CategoryForm() {
       </div>
       <div>
         <Button onClick={handleSubmit}>Submit</Button>
+      </div>
+      <div>
+        <Button onClick={handleClose}>Close</Button>
       </div>
     </Box>
   );

@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { useState, useEffect, useContext } from 'react';
+
+
+// Material UI
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -10,10 +14,24 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import Card from '@mui/material/Card';
 
 // Components
+import AddButton from '../../components/Buttons/AddButton';
+import CategoryCard from '../../components/Cards/CategoryCard';
+
+// Utilities
+import { DataContext } from '../../utilities/DataContext';
 
 export default function Content() {
+  const { categoryData, setCategoryData } = useContext(DataContext);
+
+  useEffect(() => {
+    
+  }, [categoryData]);
+
+  console.log(categoryData.map((category) => category))
+
   return (
     <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
       <AppBar
@@ -39,9 +57,7 @@ export default function Content() {
               />
             </Grid>
             <Grid item>
-              <Button variant="contained" sx={{ mr: 1 }}>
-                Add user
-              </Button>
+              <AddButton name="Topic" />
               <Tooltip title="Reload">
                 <IconButton>
                   <RefreshIcon color="inherit" sx={{ display: 'block' }} />
@@ -54,6 +70,11 @@ export default function Content() {
       </AppBar>
       <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
         This is the main Content.jsx file that will house a special type of view to see most recent additions and topics.
+      { categoryData ? categoryData.map((c) => {
+        return (
+          <CategoryCard key={c.id} c={c} />
+        )
+      }) : null }
       </Typography>
     </Paper>
   );

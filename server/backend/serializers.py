@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from .models import User, Topic, Tag, Note, CodeExample, WordDefinition, UserNote, UserProfile, Category, Analogy
+from .models import User, Topic, Tag, Note, CodeExample, WordDefinition, UserProfile, Category, Analogy
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'is_staff']
+        fields = ['user_id', 'url', 'username', 'email', 'is_staff']
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,39 +15,34 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ['name', 'description']
+        fields = ['tag_id', 'name', 'description']
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['name', 'description']
+        fields = ['category_id', 'name', 'description']
 
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
-        fields = ['name', 'description']
+        fields = ['topic_id', 'name', 'description']
 
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
-        fields = ['topic', 'content', 'tags']
+        fields = ['note_id', 'topic', 'content', 'tags']
 
 class CodeExampleSerializer(serializers.ModelSerializer):
     class Meta:
         model = CodeExample
-        fields = ['topic', 'title', 'description', 'code', 'tags']
+        fields = ['code_id', 'topic', 'title', 'description', 'code', 'tags']
 
 class WordDefinitionSerializer(serializers.ModelSerializer):
     class Meta:
         model = WordDefinition
-        fields = ['word', 'definition', 'notes']
-
-class UserNoteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserNote
-        fields = ['user', 'note', 'content']
+        fields = ['word_id', 'word', 'definition', 'notes']
 
 class AnalogySerializer(serializers.ModelSerializer):
     class Meta:
         model = Analogy
-        fields = ['topic', 'title', 'description', 'analogy', 'tags']
+        fields = ['analogy_id', 'topic', 'title', 'description', 'analogy', 'tags']

@@ -9,10 +9,10 @@ from rest_framework import viewsets, status
 import json
 
 # Serializer imports
-from .serializers import UserSerializer, UserProfileSerializer, TagSerializer, TopicSerializer, NoteSerializer, CodeExampleSerializer, WordDefinitionSerializer, UserNoteSerializer, CategorySerializer
+from .serializers import UserSerializer, UserProfileSerializer, TagSerializer, TopicSerializer, NoteSerializer, CodeExampleSerializer, WordDefinitionSerializer, CategorySerializer, AnalogySerializer
 
 # Model imports
-from .models import User, UserProfile, Tag, Topic, Note, CodeExample, WordDefinition, UserNote, Category
+from .models import User, UserProfile, Tag, Topic, Note, CodeExample, WordDefinition, Category, Analogy
 
 class UserViewSet(viewsets.ModelViewSet):
   serializer_class = UserSerializer
@@ -42,17 +42,13 @@ class TagsViewSet(viewsets.ModelViewSet):
   serializer_class = TagSerializer
   queryset = Tag.objects.all()
 
-class UserNoteViewSet(viewsets.ModelViewSet):
-  serializer_class = UserNoteSerializer
-  queryset = UserNote.objects.all()
-
 class CategoryViewSet(viewsets.ModelViewSet):
   serializer_class = CategorySerializer
   queryset = Category.objects.all()
 
 class AnalogyViewSet(viewsets.ModelViewSet):
-  serializer_class = UserNoteSerializer
-  queryset = UserNote.objects.all()
+  serializer_class = AnalogySerializer
+  queryset = Analogy.objects.all()
 
 @api_view(['POST'])
 def add_category(request):

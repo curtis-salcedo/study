@@ -24,6 +24,7 @@ class Category(models.Model):
     
 # Topic Model
 class Topic(models.Model):
+    topic_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -34,17 +35,20 @@ class Topic(models.Model):
 
 # Tag Model
 class Tag(models.Model):
+    tag_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
 
 # Note Model (Updated)
 class Note(models.Model):
+    note_id = models.AutoField(primary_key=True)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     content = models.TextField()
     tags = models.ManyToManyField(Tag)
 
 # Code Example Model (Updated)
 class CodeExample(models.Model):
+    code_id = models.AutoField(primary_key=True)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -53,15 +57,10 @@ class CodeExample(models.Model):
 
 # Word/Definition Model
 class WordDefinition(models.Model):
+    word_id = models.AutoField(primary_key=True)
     word = models.CharField(max_length=255)
     definition = models.TextField()
     notes = models.ManyToManyField(Note)
-
-# User Notes and Highlights
-class UserNote(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    note = models.ForeignKey(Note, on_delete=models.CASCADE)
-    content = models.TextField()
 
 # User Profile and Progress Tracking
 class UserProfile(models.Model):
@@ -69,6 +68,7 @@ class UserProfile(models.Model):
     completed_notes = models.ManyToManyField(Note)
 
 class Analogy(models.Model):
+    analogy_id = models.AutoField(primary_key=True)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()

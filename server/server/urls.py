@@ -29,7 +29,6 @@ router.register(r'tags', views.TagsViewSet)
 router.register(r'notes', views.NoteViewSet)
 router.register(r'codeexamples', views.CodeExampleViewSet)
 router.register(r'worddefinitions', views.WordDefinitionViewSet)
-router.register(r'usernotes', views.UserNoteViewSet)
 router.register(r'category', views.CategoryViewSet)
 router.register(r'analogy', views.AnalogyViewSet)
 

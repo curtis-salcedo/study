@@ -11,8 +11,7 @@ import { DataContext } from '../../utilities/DataContext';
 
 export default function AddButton({ name }) {
   const [open, setOpen] = useState(false);
-  const { activeChoice, setActiveChoice } = useContext(DataContext);
-  console.log('activeChoice in AddButton', activeChoice)
+  const { formSelected, setFormSelected } = useContext(DataContext);
 
   return (
     <Button
@@ -21,7 +20,7 @@ export default function AddButton({ name }) {
       size="medium"
       variant="outlined"
       onClick={ () => {
-        setActiveChoice(name)
+        setFormSelected(name)
       }}
     >
       {name}
