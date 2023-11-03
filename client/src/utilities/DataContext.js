@@ -12,6 +12,7 @@ export const DataProvider = (props) => {
 
   // Variables for category and topic data active choices
   const [ activeData, setActiveData ] = useState({});
+  const [ activeTopic, setActiveTopic ] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -62,6 +63,8 @@ export const DataProvider = (props) => {
         setTopicsData,
         activeData: activeData || null,
         setActiveData,
+        activeTopic: activeTopic || null,
+        setActiveTopic,
         }}
       >
       {props.children}

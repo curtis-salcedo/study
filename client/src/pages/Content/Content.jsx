@@ -39,45 +39,6 @@ export default function Content() {
 
   return (
     <Paper sx={{ height: '100%', margin: 'auto', overflow: 'hidden' }}>
-      <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
-        >
-        <Toolbar>Category Name</Toolbar>
-        <Toolbar>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item>
-              <SearchIcon color="inherit" sx={{ display: 'block' }} />
-            </Grid>
-            <Grid item xs>
-              <TextField
-                fullWidth
-                placeholder="Search by email address, phone number, or user UID"
-                InputProps={{
-                  disableUnderline: true,
-                  sx: { fontSize: 'default' },
-                }}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item>
-              <AddButton name="Topic" />
-              <Tooltip title="Reload">
-                <IconButton>
-                  <RefreshIcon color="inherit" sx={{ display: 'block' }} />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
-        </Toolbar>
-
-      </AppBar>
-      {/* <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
-        This is the main Content.jsx file that will house a special type of view to see most recent additions and topics.
-      </Typography> */}
-
       { activeData.name ? 
         <Box
         sx={{
@@ -92,20 +53,6 @@ export default function Content() {
         This is the main Content.jsx file that will house a special type of view to see most recent additions and topics.
       </Typography>
       }
-
-      {/* { page ? 
-        <TopicPage /> : null
-      }
-      <Routes>
-        <Route path='/topics/:topicId' element={ <TopicPage topic='Test' /> } />
-      </Routes>
-
-      { categoryData ? categoryData.map((c) => {
-        return (
-          <CategoryCard key={c.id} c={c} setPage={setPage} page={page} />
-        )
-      }) : null } */}
-
     </Paper>
   );
 }

@@ -107,11 +107,17 @@ const quickAddButtons = {
 
 export default function SideBar(props) {
   const { ...other } = props;
-  const { categoryData, activeData, setActiveData } = useContext(DataContext);
+  const { categoryData, activeData, setActiveData, setActiveTopic } = useContext(DataContext);
 
 
-  const handleClick = (e, category) => {
+  const handleCategoryClick = (e, category) => {
     setActiveData(category)
+    setActiveTopic(null)
+  }
+
+  const handleTopicClick = (e, topic, category) => {
+    setActiveData(category)
+    setActiveTopic(topic)
   }
 
   useEffect(() => {
@@ -136,15 +142,15 @@ export default function SideBar(props) {
           <Box key={category.category_id} sx={{ bgcolor: '#101F33' }}>
             <ListItem key={category.category_id} sx={{ ...item, ...itemCategory }}>
               <ListItemIcon><PublicIcon /></ListItemIcon>
-              <Button value={category.name} onClick={(e) => handleClick(e, category)}>
+              <Button value={category.name} onClick={(e) => handleCategoryClick(e, category)}>
                 <ListItemText>{category.name}</ListItemText>
               </Button>
             </ListItem>
-            {category.topics.map(({ topic_id, name, active }) => (
-              <ListItem disablePadding key={topic_id}>
-                <ListItemButton selected={active} sx={item}>
+            {category.topics.map(( topic ) => (
+              <ListItem disablePadding key={topic.topic_id}>
+                <ListItemButton selected={topic.active} sx={item} onClick={(e) => handleTopicClick(e, topic, category)}>
                   <ListItemIcon><SettingsEthernetIcon /></ListItemIcon>
-                  <ListItemText>{name}</ListItemText>
+                  <ListItemText>{topic.name}</ListItemText>
                 </ListItemButton>
               </ListItem>
             ))}

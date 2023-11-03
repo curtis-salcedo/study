@@ -15,16 +15,20 @@ import TopicCard from '../../components/Cards/TopicCard';
 import TopicPage from '../Topic/TopicPage';
 
 export default function CategoryPage() {
-  const { categoryData, setCategoryData, topicsData, activeData } = useContext(DataContext);
-  const [ activeTopic, setActiveTopic ] = useState(null);
+  const { categoryData, setCategoryData, activeTopic, setActiveTopic,topicsData, activeData } = useContext(DataContext);
+
+  const [ topic, setTopic ] = useState(false);
 
   useEffect(() => {
-    console.log('activeData', activeData);
-    if (activeData.length === 1) {
-      setActiveTopic(activeData[0]);
+    if (activeTopic) {
+      setTopic(false);
+    } else {
+      setTopic(true);
     }
-
-  }, [categoryData, activeData]);
+  }, [categoryData, activeData, activeTopic]);
+  
+  console.log('activeData', activeData);
+  console.log('activeTopic', activeTopic);
 
   return (
     <Box
@@ -34,21 +38,19 @@ export default function CategoryPage() {
         display: 'flex',
         justifyContent: 'center',
         flexWrap: 'wrap',
-        backgroundColor: 'blue',
         overflow: 'auto',
       }}>
 
       { activeTopic ? 
-        <TopicPage category={activeData} />
+          <TopicPage t={activeTopic} />
         :
         <>
-        { activeData.topics.map((t) => (
+        { activeData && activeData.topics.map((t) => (
             <TopicCard t={t} />
-          
         ))}
         </>
       }
-      
+
     </Box>
   )
 }

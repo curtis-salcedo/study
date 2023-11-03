@@ -8,20 +8,29 @@ import TopicCard from '../../components/Cards/TopicCard';
 import { DataContext } from '../../utilities/DataContext';
 
 // Styles
+import {
+  Box,
+  Paper,
+} from '@mui/material';
 
 
-export default function TopicPage({ category }) {
-  const { activeData } = useContext(DataContext);
+export default function TopicPage() {
+  const { activeData, activeTopic } = useContext(DataContext);
   const [ categoryTopics, setCategoryTopics ] = useState([]);
 
   useEffect(() => {
-    setCategoryTopics(category.topics);
-  }, [category]);
+    
+  }, []);
   
-  console.log('activeData', category, categoryTopics);
+  console.log('activeTopic', activeTopic);
   return (
     <>
-      <div>Topic Page</div>
+      <Paper>
+        <h1>{activeTopic.name}</h1>
+        <h2>{activeTopic.description}</h2>
+        <h3>{activeTopic.notes}</h3>
+        <h4>{activeTopic.analogies}</h4>
+      </Paper>
     </>
 
   )

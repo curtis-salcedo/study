@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 // Styles
 import {
@@ -19,18 +20,19 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
-export default function TopicCard({ t, setPage }) {
+// Utilities
+import { DataContext } from '../../utilities/DataContext';
 
-  const handleOpen = (e, t) => {
-    console.log(t)
-    e.preventDefault();
-    setPage(t.topic_id)
-  }
+export default function TopicCard({ t }) {
+  const { categoryData, setCategoryData, activeTopic, setActiveTopic,topicsData, activeData } = useContext(DataContext);
 
   const handleClick = (e) => {
     e.preventDefault();
     console.log('clicked', t.topic_id)
+    setActiveTopic(t)
   }
+
+  console.log(activeTopic)
 
   return (
     <Paper sx={{ cursor: 'pointer', width: 300, height: 300, margin: 1, overflow: 'hidden' }} onClick={handleClick}>
@@ -45,7 +47,7 @@ export default function TopicCard({ t, setPage }) {
       {/* This is the topic header with edit button */}
         <Toolbar>
         <Typography sx={{ my: 5, mx: 2 }} color="text" align="center">
-        {t.description}
+        {t.name}
       </Typography>
           {/* <Grid container spacing={0} alignItems="center">
             <Typography>{t.name}</Typography>
