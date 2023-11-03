@@ -105,9 +105,18 @@ const quickAddButtons = {
   flexDirection: 'column',
 };
 
-export default function Navigator(props) {
+export default function SideBar(props) {
   const { ...other } = props;
-  const { activeChoice, setActiveChoice, formSelected, setFormSelected } = useContext(DataContext);
+  const { categoryData, activeData, setActiveData } = useContext(DataContext);
+
+
+  const handleClick = (e, category) => {
+    setActiveData(category)
+  }
+
+  useEffect(() => {
+    
+  }, [categoryData]);
 
   return (
     <Drawer variant="permanent" {...other}>
@@ -123,16 +132,28 @@ export default function Navigator(props) {
           <ListItemText>Home</ListItemText>
         </ListItem>
 
-        <ListItem sx={{ color: '#fff', ...itemCategory, ...quickAddButtons }}>
-          <ListItemText>Quick Add</ListItemText>
-          <AddButton name="Category"/>
-          <AddButton name="Topic"/>
-          <AddButton name="Definition"/>
-          <AddButton name="Notes"/>
-          <AddButton name="Analogy"/>
-        </ListItem>
+        { categoryData ? categoryData.map((category) => (
+          <Box key={category.category_id} sx={{ bgcolor: '#101F33' }}>
+            <ListItem key={category.category_id} sx={{ ...item, ...itemCategory }}>
+              <ListItemIcon><PublicIcon /></ListItemIcon>
+              <Button value={category.name} onClick={(e) => handleClick(e, category)}>
+                <ListItemText>{category.name}</ListItemText>
+              </Button>
+            </ListItem>
+            {category.topics.map(({ topic_id, name, active }) => (
+              <ListItem disablePadding key={topic_id}>
+                <ListItemButton selected={active} sx={item}>
+                  <ListItemIcon><SettingsEthernetIcon /></ListItemIcon>
+                  <ListItemText>{name}</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            ))}
+            <Divider sx={{ mt: 2 }} />
+          </Box>
+        )) : null }
+        <Divider sx={{ mt: 2 }} />
 
-        { categories ? 
+        {/* { categories ? 
           categories.map(({ id, id: icon, children }) => 
           <Box key={id} sx={{ bgcolor: '#101F33' }}>
             <ListItem sx={{ py: 2, px: 3 }}>
@@ -167,7 +188,15 @@ export default function Navigator(props) {
               <Divider sx={{ mt: 2 }} />
             </Box>
           ))
-        }
+        } */}
+        <ListItem sx={{ color: '#fff', ...itemCategory, ...quickAddButtons }}>
+          <ListItemText>Quick Add</ListItemText>
+          <AddButton name="Category"/>
+          <AddButton name="Topic"/>
+          <AddButton name="Definition"/>
+          <AddButton name="Notes"/>
+          <AddButton name="Analogy"/>
+        </ListItem>
       </List>
     </Drawer>
   );

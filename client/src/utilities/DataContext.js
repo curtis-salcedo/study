@@ -6,8 +6,12 @@ export const DataContext = createContext();
 
 export const DataProvider = (props) => {
   const [ formSelected, setFormSelected ] = useState('');
-  const [activeChoice, setActiveChoice] = useState([]);
+  const [ activeChoice, setActiveChoice ] = useState([]);
   const [ categoryData, setCategoryData ] = useState([]);
+  const [ topicsData, setTopicsData ] = useState([]);
+
+  // Variables for category and topic data active choices
+  const [ activeData, setActiveData ] = useState({});
 
   useEffect(() => {
     fetchData();
@@ -23,14 +27,25 @@ export const DataProvider = (props) => {
       });
     };
 
+  const getTopics = async () => {
+    axios.get('http://localhost:8000/api/topics/')
+      .then((response) => {
+        setTopicsData(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+
   const fetchData = async () => {
     let user;
     try {
       getCategory();
+      getTopics();
       // user = await getUser();
       // setUser(user);
     } catch (err) {
-      console.log('Error at DataContext.js fetchData for User Data', err);
+      console.log('Error at DataContext.js fetchData', err);
     }
   };
 
@@ -43,6 +58,10 @@ export const DataProvider = (props) => {
         setFormSelected,
         categoryData: categoryData || null,
         setCategoryData,
+        topicsData: topicsData || null,
+        setTopicsData,
+        activeData: activeData || null,
+        setActiveData,
         }}
       >
       {props.children}

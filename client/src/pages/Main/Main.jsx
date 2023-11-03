@@ -13,9 +13,10 @@ import { DataContext } from '../../utilities/DataContext';
 
 // Pages
 import Content from '../Content/Content';
+import TopicPage from '../../features/Topic/TopicPage';
 
 // Components
-import Navigator from '../../components/Navigator/Navigator';
+import Navigator from '../../components/SideBar/SideBar';
 import Header from '../../components/Header/Header';
 import CategoryCard from '../../components/Cards/CategoryCard';
 import TopicCard from '../../components/Cards/TopicCard';
@@ -191,7 +192,7 @@ export default function Main() {
     setMobileOpen(!mobileOpen);
   };
   const { activeChoice, setActiveChoice, formSelected, setFormSelected } = useContext(DataContext);
-  const [ mainContent, setMainContent ] = useState(null);
+  const [ mainContent, setMainContent ] = useState(<Content />);
 
   const [ form, setForm ] = useState(null);
   const [ showForm, setShowForm ] = useState(false);
@@ -216,11 +217,10 @@ export default function Main() {
   }
 
   useEffect(() => {
-    setMainContent(<Content />)
     if (formSelected) {
       getForm(formSelected);
     }
-  }, [formSelected])
+  }, [formSelected])  
 
   return (
     <ThemeProvider theme={theme}>
@@ -245,40 +245,39 @@ export default function Main() {
           />
         </Box>
 
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ width: '100%', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
 
         <Header onDrawerToggle={handleDrawerToggle} />
         
       {/* This is where the active selection will go */}
-        {formSelected ? 
-          <Box
-            component="main"
-            sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
-            >
-            {form}
-          </Box>
-        : null }
+          { formSelected ? 
+            <Box
+              component="main"
+              sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
+              >
+              {form}
+            </Box>
+          : null }
 
-        {mainContent ? 
-          <Box
+          { mainContent ? 
+            <Box
+              component="main"
+              sx={{ flexGrow: 1, bgcolor: '#eaeff1' }}
+              >
+              {mainContent}
+            </Box>
+          : 
+            <Box
             component="main"
             sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
             >
-            {mainContent}
-          </Box>
-        : 
-          <Box
-          component="main"
-          sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
-          >
-            There is no main content
-          </Box>
-        }
+              <Content />
+            </Box>
+          }
 
           <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
             <Copyright />
           </Box>
-
         </Box>
       </Box>
     </ThemeProvider>

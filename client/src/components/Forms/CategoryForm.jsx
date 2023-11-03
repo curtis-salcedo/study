@@ -58,7 +58,7 @@ export default function CategoryForm({ showForm, setShowForm }) {
         <TextField
           name="name"
           id="outlined-basic"
-          label="Outlined"
+          label="Category Name"
           variant="outlined"
           onChange={handleChange}
         />
@@ -68,7 +68,7 @@ export default function CategoryForm({ showForm, setShowForm }) {
         <TextField
           name="description"
           id="outlined-multiline-flexible"
-          label="Multiline"
+          label="Category Description"
           multiline
           minRows={6}
           maxRows={12}

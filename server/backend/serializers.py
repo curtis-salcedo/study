@@ -18,14 +18,19 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ['tag_id', 'name', 'description']
 
 class CategorySerializer(serializers.ModelSerializer):
+    topics = serializers.SerializerMethodField()
     class Meta:
         model = Category
-        fields = ['category_id', 'name', 'description']
+        fields = '__all__'
+    def get_topics(self, obj):
+        topics = Topic.objects.filter(category_id=obj)
+        print('topic in serializer area', topics)
+        return TopicSerializer(topics, many=True).data
 
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
-        fields = ['topic_id', 'name', 'description']
+        fields = ['topic_id', 'name', 'description', 'category_id', 'url']
 
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:

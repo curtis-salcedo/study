@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect, useContext } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 
 // Material UI
@@ -20,26 +21,31 @@ import Card from '@mui/material/Card';
 import AddButton from '../../components/Buttons/AddButton';
 import CategoryCard from '../../components/Cards/CategoryCard';
 
+// Pages
+import TopicPage from '../../features/Topic/TopicPage';
+import CategoryPage from '../../features/Category/CategoryPage';
+
 // Utilities
 import { DataContext } from '../../utilities/DataContext';
+import { Box } from '@mui/material';
 
 export default function Content() {
-  const { categoryData, setCategoryData } = useContext(DataContext);
+  const { categoryData, setCategoryData, topicsData, activeData } = useContext(DataContext);
+  const [page, setPage] = useState('');
 
   useEffect(() => {
     
-  }, [categoryData]);
-
-  console.log(categoryData.map((category) => category))
+  }, [categoryData, page]);
 
   return (
-    <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
+    <Paper sx={{ height: '100%', margin: 'auto', overflow: 'hidden' }}>
       <AppBar
         position="static"
         color="default"
         elevation={0}
         sx={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
-      >
+        >
+        <Toolbar>Category Name</Toolbar>
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item>
@@ -68,14 +74,38 @@ export default function Content() {
         </Toolbar>
 
       </AppBar>
-      <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
+      {/* <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
         This is the main Content.jsx file that will house a special type of view to see most recent additions and topics.
+      </Typography> */}
+
+      { activeData.name ? 
+        <Box
+        sx={{
+          minHeight: '100%',
+          width: '100%',
+          backgroundColor: 'blue',
+        }}>
+          <CategoryPage />
+        </Box>
+      : 
+        <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
+        This is the main Content.jsx file that will house a special type of view to see most recent additions and topics.
+      </Typography>
+      }
+
+      {/* { page ? 
+        <TopicPage /> : null
+      }
+      <Routes>
+        <Route path='/topics/:topicId' element={ <TopicPage topic='Test' /> } />
+      </Routes>
+
       { categoryData ? categoryData.map((c) => {
         return (
-          <CategoryCard key={c.id} c={c} />
+          <CategoryCard key={c.id} c={c} setPage={setPage} page={page} />
         )
-      }) : null }
-      </Typography>
+      }) : null } */}
+
     </Paper>
   );
 }

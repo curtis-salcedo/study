@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 // Styles
 import {
@@ -25,9 +26,19 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 // Component
 import TopicCard from './TopicCard';
 
-export default function CategoryCard({ c }) {
+// Utilities
+import { DataContext } from '../../utilities/DataContext';
+
+// c = categoryData, t = topicsData
+export default function CategoryCard({ c, t, setPage, page }) {
+  const { categoryData, setCategoryData, topicsData } = useContext(DataContext);
+
+  useEffect(() => {
+    console.log('page at categorycard', page)
+  }, []);
+
   return (
-    <Paper sx={{ maxWidth: 400, margin: 1, overflow: 'hidden' }}>
+    <Paper sx={{ margin: 1, overflow: 'hidden' }}>
 
       <Card sx={{ minWidth: 275 }}>
         <AppBar
@@ -49,23 +60,17 @@ export default function CategoryCard({ c }) {
           {c.description} 
         </Typography>
 
-        <Grid>
-          { c.topics ? c.topics.map((t) => (
-            <TopicCard t={t} />
-          )) : null }
-          <Button>Topic 1</Button>
-          <Button>Topic 1</Button>
-          <Button>Topic 1</Button>
-          <Button>Topic 1</Button>
-          <Button>Topic 1</Button>
-          <Button>Topic 1</Button>
-          <Button>Topic 1</Button>
-          <Button>Topic 1</Button>
+        <Grid sx={{
+          display: 'flex',
+        }}>
+          {c.topics.map((topic) => (
+            <TopicCard t={topic} setPage={setPage} />
+          ))}
         </Grid>
 
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small">Button for Something</Button>
       </CardActions>
     </Card>
 

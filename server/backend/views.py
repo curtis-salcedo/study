@@ -4,7 +4,7 @@ from django.http import JsonResponse
 # Rest Framework imports
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, serializers
 
 import json
 
@@ -61,10 +61,10 @@ def add_category(request):
 @api_view(['POST'])
 def add_topic(request):
   print(request.data)
-  serializer = TopicSerializer(data=request.data)
-  if serializer.is_valid():
-    serializer.save()
-  return Response(serializer.data)
+  category = Category.objects.get(category_id=request.data['category_id'])
+  new_topic = Topic.objects.create(name=request.data['name'], description=request.data['description'], category=category, url=request.data['url'])
+  new_topic.save()
+  return Response(TopicSerializer(new_topic).data)
 
 @api_view(['POST'])
 def add_tag(request):
