@@ -51,7 +51,7 @@ class AnalogyViewSet(viewsets.ModelViewSet):
   queryset = Analogy.objects.all()
 
 @api_view(['POST'])
-def add_category(request):
+def add_categories(request):
   print(request.data)
   serializer = CategorySerializer(data=request.data)
   if serializer.is_valid():
@@ -59,7 +59,7 @@ def add_category(request):
   return Response(serializer.data)
 
 @api_view(['POST'])
-def add_topic(request):
+def add_topics(request):
   print(request.data)
   category = Category.objects.get(category_id=request.data['category_id'])
   new_topic = Topic.objects.create(name=request.data['name'], description=request.data['description'], category=category, url=request.data['url'])
@@ -67,7 +67,7 @@ def add_topic(request):
   return Response(TopicSerializer(new_topic).data)
 
 @api_view(['POST'])
-def add_tag(request):
+def add_tags(request):
   print(request.data)
   serializer = TagSerializer(data=request.data)
   if serializer.is_valid():
@@ -75,15 +75,15 @@ def add_tag(request):
   return Response(serializer.data)
 
 @api_view(['POST'])
-def add_note(request):
+def add_notes(request):
   print(request.data)
-  serializer = NoteSerializer(data=request.data)
-  if serializer.is_valid():
-    serializer.save()
-  return Response(serializer.data)
+  topic = Topic.objects.get(topic_id=request.data['topic'])
+  new_note = Note.objects.create(topic=topic, content=request.data['content'])
+  new_note.save()
+  return Response(NoteSerializer(new_note).data)
 
 @api_view(['POST'])
-def add_code_example(request):
+def add_code_examples(request):
   print(request.data)
   serializer = CodeExampleSerializer(data=request.data)
   if serializer.is_valid():
@@ -91,7 +91,7 @@ def add_code_example(request):
   return Response(serializer.data)
 
 @api_view(['POST'])
-def add_word_definition(request):
+def add_word_definitions(request):
   print(request.data)
   serializer = WordDefinitionSerializer(data=request.data)
   if serializer.is_valid():
@@ -99,9 +99,9 @@ def add_word_definition(request):
   return Response(serializer.data)
 
 @api_view(['POST'])
-def add_analogy(request):
+def add_analogies(request):
   print(request.data)
-  serializer = UserNoteSerializer(data=request.data)
+  serializer = AnalogySerializer(data=request.data)
   if serializer.is_valid():
     serializer.save()
   return Response(serializer.data)

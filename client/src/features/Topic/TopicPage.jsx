@@ -97,22 +97,10 @@ export default function TopicPage() {
     
   }, [activeNote])
 
-  console.log('activeNote', activeNote)
-  // console.log('showActicveNote', showActiveNote )
-
   return (
     
     <Container>
       <Grid container>
-
-        <Grid item xs={12}>
-          { showForm ?
-            <Grid item xs={12}>
-              <NoteForm />
-            </Grid>
-            : null
-          }
-        </Grid>
 
         <Grid item xs={12}>
           <Typography variant="h3" sx={{ }} color="text" align="center">{activeTopic.name}</Typography>
@@ -120,6 +108,16 @@ export default function TopicPage() {
         
         <Grid item xs={12}>
           <Typography variant="body1" sx={{ }} color="text.secondary" align="center">{activeTopic.description}</Typography>
+        </Grid>
+
+        
+        <Grid item xs={12}>
+          { showForm ?
+            <Grid item xs={12}>
+              <NoteForm />
+            </Grid>
+            : null
+          }
         </Grid>
 
         { activeNote ?

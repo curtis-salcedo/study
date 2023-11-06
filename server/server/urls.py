@@ -42,23 +42,23 @@ urlpatterns = [
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # Category Paths
-    path('api/add_category/', views.add_category),
+    path('api/add_categories/', views.add_categories),
 
     # Topic Paths
-    path('api/add_topic/', views.add_topic),
+    path('api/add_topics/', views.add_topics),
 
     # Tag Paths
-    path('api/add_tag/', views.add_tag),
+    path('api/add_tags/', views.add_tags),
 
     # Note Paths
-    path('api/add_note/', views.add_note),
+    path('api/add_notes/', views.add_notes),
 
     # Code Example Paths
-    path('api/add_code_example/', views.add_code_example),
+    path('api/add_code_examples/', views.add_code_examples),
 
     # Word Definition Paths
-    path('api/add_word_definition/', views.add_word_definition),
+    path('api/add_word_definitions/', views.add_word_definitions),
 
     # Analogy Paths
-    path('api/add_analogy/', views.add_analogy),
+    path('api/add_analogies/', views.add_analogies),
 ]

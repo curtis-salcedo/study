@@ -35,7 +35,7 @@ export default function CategoryForm({ showForm, setShowForm }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('handleSubmit', formData);
-    axios.post('http://localhost:8000/api/add_category/',  formData )
+    axios.post('http://localhost:8000/api/add_categories/',  formData )
       .then(res => console.log(res))
       .catch(err => console.log(err));
   }

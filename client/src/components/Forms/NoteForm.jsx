@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState, useContext } from 'react';
 import axios from 'axios';
 
@@ -18,13 +18,19 @@ import {
 import { DataContext } from '../../utilities/DataContext';
 
 export default function NoteForm() {
-  const { activeData, setFormSelected, categoryData } = useContext(DataContext);
+  const { activeData, activeTopic, setFormSelected, categoryData } = useContext(DataContext);
+
+  useEffect(() => {
+    setFormData(prevState => ({
+      ...prevState,
+      topic: activeTopic.topic_id,
+    }));
+  }, [activeTopic])
 
   const [ formData, setFormData ] = useState({
-    name: '',
     topic: '',
     content: '',
-    tags: '',
+    tags: [],
   });
 
   const handleChange = (e) => {
@@ -37,9 +43,8 @@ export default function NoteForm() {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     console.log('handleSubmit', formData);
-    axios.post('http://localhost:8000/api/add_topic/',  formData )
+    axios.post('http://localhost:8000/api/add_notes/',  formData )
       .then(res => console.log(res))
       .catch(err => console.log(err));
   }
@@ -47,8 +52,6 @@ export default function NoteForm() {
   const handleClose = () => {
     setFormSelected(false)
   }
-
-  console.log(categoryData.map((category) => category))
 
   return (
     <Box
@@ -60,38 +63,21 @@ export default function NoteForm() {
       autoComplete="off"
     >
       <div>
-        
         <TextField
-          name="category_id"
-          id="outlined-select-currency"
-          select
-          label="Category"
-          value={formData.category_id ? formData.category_id : ""}
-          onChange={handleChange}
-        >
-          { categoryData ? categoryData.map((c) => (
-            <MenuItem key={c.category_id} value={c.category_id} name={c.name}>
-              {c.name}
-            </MenuItem>
-          )) : null }
-        </TextField>
-      </div>
-
-      <div>
-        <TextField
-          name="name"
+          disabled
+          name='topic'
           id="outlined-basic"
-          label="Topic Title"
-          variant="outlined"
+          label="Topic"
+          value={activeTopic.name}
           onChange={handleChange}
         />
       </div>
 
       <div>
         <TextField
-          name="description"
+          name="content"
           id="outlined-multiline-flexible"
-          label="Topic Description"
+          label="Note Content / Description"
           multiline
           minRows={6}
           maxRows={12}
@@ -101,9 +87,9 @@ export default function NoteForm() {
 
       <div>
         <TextField
-          name="url"
+          name="tags"
           id="outlined-basic"
-          label="URL Reference"
+          label="Tags"
           onChange={handleChange}
         />
       </div>
