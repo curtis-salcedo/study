@@ -12,7 +12,9 @@ import {
   Typography,
   Button,
   Divider,
-
+  Card,
+  CardHeader,
+  CardActions,
 
 } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,6 +23,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TopicCard from '../../components/Cards/TopicCard';
 import DefinitionMenu from '../Definition/DefinitionMenu';
 import NoteCard from '../../components/Cards/NoteCard';
+import NotePage from '../Note/NotePage';
+import NoteForm  from '../../components/Forms/NoteForm';
 
 // Utilities
 import { DataContext } from '../../utilities/DataContext';
@@ -35,7 +39,7 @@ const definitions = [
 
 const notecards = [
   {
-    topic: 'Notecard Topic 1',
+    name: 'Notecard Topic 1',
     content: 'This is the content of the note card',
     tags: [
       {
@@ -53,7 +57,7 @@ const notecards = [
     ]
   },
   {
-    topic: 'Notecard Topic 2',
+    name: 'Notecard Topic 2',
     content: 'This is the content of the note card',
     tags: [
       {
@@ -75,13 +79,40 @@ const notecards = [
 
 export default function TopicPage() {
   const { activeData, activeTopic } = useContext(DataContext);
+  const [ activeNote, setActiveNote ] = useState(null);
+  const [ showForm, setShowForm ] = useState(false);
 
-  const [ showDefinitions, setShowDefinitions ] = useState(false);
+  const handleNoteClick = (e, note) => {
+    e.preventDefault();
+    console.log('clicked', note)
+    setActiveNote(note)
+  }
+
+  const handleFormClick = (e) => {
+    e.preventDefault();
+    setShowForm(!showForm)
+  }
+
+  useEffect(() => {
+    
+  }, [activeNote])
+
+  console.log('activeNote', activeNote)
+  // console.log('showActicveNote', showActiveNote )
 
   return (
     
     <Container>
       <Grid container>
+
+        <Grid item xs={12}>
+          { showForm ?
+            <Grid item xs={12}>
+              <NoteForm />
+            </Grid>
+            : null
+          }
+        </Grid>
 
         <Grid item xs={12}>
           <Typography variant="h3" sx={{ }} color="text" align="center">{activeTopic.name}</Typography>
@@ -91,10 +122,59 @@ export default function TopicPage() {
           <Typography variant="body1" sx={{ }} color="text.secondary" align="center">{activeTopic.description}</Typography>
         </Grid>
 
+        { activeNote ?
+
+          <Grid item xs={12}>
+            <NotePage note={activeNote} />
+          </Grid>
+          
+          : null }
+
         <Grid item xs={12}>
-          { notecards.map((note) => (
-            <NoteCard note={note} />
-          ))}
+          <Container container sx={{ display:'flex'}}>
+
+            <Card
+              elevation={3}
+              sx={{ 
+                cursor: 'pointer',
+                width: 200,
+                height: 200,
+                margin: 1,
+                overflow: 'hidden' 
+              }}
+              onClick={handleFormClick}
+            >
+              <CardActions>
+                <Button>Add a Note</Button>
+              </CardActions>
+            </Card>
+
+
+            { notecards.map((note) => (
+              // <NoteCard note={note} onClick={(e) => handleNoteClick(e, note)} />
+                <Card
+                  elevation={3}
+                  sx={{ 
+                    cursor: 'pointer',
+                    width: 200,
+                    height: 200,
+                    margin: 1,
+                    overflow: 'hidden' 
+                  }}
+                  onClick={(e) => handleNoteClick(e, note)}
+                  >
+
+                <CardHeader align='center' title={note.name} />
+          
+                <Divider light/>
+          
+                <CardActions>
+                  <Button>Click to open</Button>
+                </CardActions>
+              </Card>
+            ))}
+
+          </Container>
         </Grid>
 
         {/* <Grid item sx={12}>
