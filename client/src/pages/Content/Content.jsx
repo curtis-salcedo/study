@@ -44,13 +44,12 @@ export default function Content() {
         sx={{
           minHeight: '100%',
           width: '100%',
-          backgroundColor: 'blue',
         }}>
           <CategoryPage />
         </Box>
       : 
         <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
-        This is the main Content.jsx file that will house a special type of view to see most recent additions and topics.
+        This is the home page when activeData is not set. activeTopic is not set.
       </Typography>
       }
     </Paper>

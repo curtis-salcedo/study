@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect, useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -19,10 +20,13 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 
 import AddButton from '../Buttons/AddButton';
 
+import { DataContext } from '../../utilities/DataContext';
+
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
 export default function Header(props) {
   const { onDrawerToggle } = props;
+  const { activeData, activeTopic } = useContext(DataContext);
 
   return (
     <React.Fragment>
@@ -102,7 +106,10 @@ export default function Header(props) {
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs>
               <Typography color="inherit" variant="h5" component="h1">
-                Category to go here - Header.jsx
+                <Grid>
+                  { activeData.name ? activeData.name  : 'Study Buddy' }
+                  { activeTopic ? `  -   ${activeTopic.name}`  : null }
+                </Grid>
               </Typography>
             </Grid>
             <Grid item>
@@ -112,7 +119,7 @@ export default function Header(props) {
                 color="inherit"
                 size="small"
               >
-                Web setup
+                Setup
               </Button>
             </Grid>
             <Grid item>
@@ -125,7 +132,7 @@ export default function Header(props) {
           </Grid>
         </Toolbar>
       </AppBar>
-      <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
+      {/* <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
         <Tabs value={0} textColor="inherit">
           <Tab label="Category" />
           <Tab label="Topic" />
@@ -133,7 +140,7 @@ export default function Header(props) {
           <Tab label="Definition" />
           <Tab label="Concept" />
         </Tabs>
-      </AppBar>
+      </AppBar> */}
     </React.Fragment>
   );
 }

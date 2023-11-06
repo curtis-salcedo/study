@@ -13,6 +13,7 @@ import { DataContext } from '../../utilities/DataContext';
 import TopicCard from '../../components/Cards/TopicCard';
 
 import TopicPage from '../Topic/TopicPage';
+import TopicForm from '../../components/Forms/TopicForm';
 
 export default function CategoryPage() {
   const { categoryData, setCategoryData, activeTopic, setActiveTopic,topicsData, activeData } = useContext(DataContext);
@@ -26,9 +27,6 @@ export default function CategoryPage() {
       setTopic(true);
     }
   }, [categoryData, activeData, activeTopic]);
-  
-  console.log('activeData', activeData);
-  console.log('activeTopic', activeTopic);
 
   return (
     <Box
@@ -40,14 +38,13 @@ export default function CategoryPage() {
         flexWrap: 'wrap',
         overflow: 'auto',
       }}>
-
       { activeTopic ? 
           <TopicPage t={activeTopic} />
         :
         <>
-        { activeData && activeData.topics.map((t) => (
+          { activeData.topics.length > 0 ? activeData.topics.map((t) => (
             <TopicCard t={t} />
-        ))}
+          )) : <TopicForm /> }
         </>
       }
 

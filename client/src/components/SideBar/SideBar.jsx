@@ -120,6 +120,11 @@ export default function SideBar(props) {
     setActiveTopic(topic)
   }
 
+  const handleHomeClick = () => {
+    setActiveData({})
+    setActiveTopic({})
+  }
+
   useEffect(() => {
     
   }, [categoryData]);
@@ -127,11 +132,11 @@ export default function SideBar(props) {
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
-        <ListItem sx={{ ...item, ...itemCategory, fontSize: 22, color: '#fff' }}>
+        <ListItem sx={{ fontSize: 22, color: '#fff', justifyContent: 'center' }}>
           Study Buddy
         </ListItem>
 
-        <ListItem sx={{ ...item, ...itemCategory }}>
+        <ListItem sx={{ ...item, ...itemCategory, cursor: 'pointer' }} onClick={handleHomeClick}>
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
@@ -140,9 +145,9 @@ export default function SideBar(props) {
 
         { categoryData ? categoryData.map((category) => (
           <Box key={category.category_id} sx={{ bgcolor: '#101F33' }}>
-            <ListItem key={category.category_id} sx={{ ...item, ...itemCategory }}>
+            <ListItem key={category.category_id} sx={{ ...item, ...itemCategory, cursor: 'pointer' }} onClick={(e) => handleCategoryClick(e, category)}>
               <ListItemIcon><PublicIcon /></ListItemIcon>
-              <Button value={category.name} onClick={(e) => handleCategoryClick(e, category)}>
+              <Button value={category.name}>
                 <ListItemText>{category.name}</ListItemText>
               </Button>
             </ListItem>
