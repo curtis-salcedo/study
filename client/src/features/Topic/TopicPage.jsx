@@ -78,8 +78,8 @@ const notecards = [
 
 
 export default function TopicPage() {
-  const { activeData, activeTopic } = useContext(DataContext);
-  const [ activeNote, setActiveNote ] = useState(null);
+  const { activeTopic, activeNote, setActiveNote } = useContext(DataContext);
+  // const [ activeNote, setActiveNote ] = useState(null);
   const [ showForm, setShowForm ] = useState(false);
 
   const handleNoteClick = (e, note) => {
@@ -99,9 +99,8 @@ export default function TopicPage() {
 
   return (
     
-    <Container>
+    <Container sx={{ display: 'flex', flexDirection: 'column', width: '100%'}}>
       <Grid container>
-
         <Grid item xs={12}>
           <Typography variant="h3" sx={{ }} color="text" align="center">{activeTopic.name}</Typography>
         </Grid>
@@ -109,71 +108,73 @@ export default function TopicPage() {
         <Grid item xs={12}>
           <Typography variant="body1" sx={{ }} color="text.secondary" align="center">{activeTopic.description}</Typography>
         </Grid>
+      </Grid>
+
+      <Grid item xs={12}  >
+        { showForm ?
+          <Grid item xs={12}>
+            <NoteForm />
+          </Grid>
+          : null
+        }
+      </Grid>
+
+      { activeNote ?
+      <Box sx={{ flexGrow: 1 }} >
+        <NotePage note={activeNote} />          
+      </Box>
+      : null }
 
         
-        <Grid item xs={12}>
-          { showForm ?
-            <Grid item xs={12}>
-              <NoteForm />
-            </Grid>
-            : null
-          }
-        </Grid>
+      <Box 
+      container
+      sx={{
+          display: 'flex',
+          width: '100%',
+          overflowX: 'scroll',
+      }}>
+        <Card
+          elevation={3}
+          sx={{ 
+            cursor: 'pointer',
+            width: 150,
+            height: 150,
+            margin: 1,
+          }}
+          onClick={handleFormClick}
+        >
+          <CardActions>
+            <Button>Add a Note</Button>
+          </CardActions>
+        </Card>
 
-        { activeNote ?
 
-          <Grid item xs={12}>
-            <NotePage note={activeNote} />
-          </Grid>
-          
-          : null }
-
-        <Grid item xs={12}>
-          <Container container sx={{ display:'flex'}}>
-
-            <Card
+        { activeTopic.notes.map((note) => (
+          // <NoteCard note={note} onClick={(e) => handleNoteClick(e, note)} />
+          <Card
               elevation={3}
               sx={{ 
                 cursor: 'pointer',
-                width: 200,
-                height: 200,
+                width: 150,
+                height: 150,
                 margin: 1,
                 overflow: 'hidden' 
               }}
-              onClick={handleFormClick}
-            >
-              <CardActions>
-                <Button>Add a Note</Button>
-              </CardActions>
-            </Card>
+              onClick={(e) => handleNoteClick(e, note)}
+              >
+
+            <CardHeader align='center' title={note.title} />
+      
+            <Divider light/>
+      
+            <CardActions>
+              <Button>Click to open</Button>
+            </CardActions>
+          </Card>
+        ))}
+        </Box>
 
 
-            { notecards.map((note) => (
-              // <NoteCard note={note} onClick={(e) => handleNoteClick(e, note)} />
-                <Card
-                  elevation={3}
-                  sx={{ 
-                    cursor: 'pointer',
-                    width: 200,
-                    height: 200,
-                    margin: 1,
-                    overflow: 'hidden' 
-                  }}
-                  onClick={(e) => handleNoteClick(e, note)}
-                  >
-
-                <CardHeader align='center' title={note.name} />
-          
-                <Divider light/>
-          
-                <CardActions>
-                  <Button>Click to open</Button>
-                </CardActions>
-              </Card>
-            ))}
-
-          </Container>
-        </Grid>
 
         {/* <Grid item sx={12}>
           <DefinitionMenu definitions={definitions} />
@@ -184,7 +185,6 @@ export default function TopicPage() {
           </Button>
           {showDefinitions && <DefinitionMenu definitions={definitions} />}
         </Grid> */}
-      </Grid>
     </Container>
 
   )

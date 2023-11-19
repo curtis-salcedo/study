@@ -48,7 +48,7 @@ export default function TopicForm({ showForm, setShowForm }) {
     setFormSelected(false)
   }
 
-  console.log(categoryData.map((category) => category))
+  // console.log(categoryData.map((category) => category))
 
   return (
     <Box

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 
 import Divider from '@mui/material/Divider';
 import Drawer, { DrawerProps } from '@mui/material/Drawer';
@@ -20,12 +21,17 @@ import TimerIcon from '@mui/icons-material/Timer';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
 import Button from '@mui/material/Button';
+import Input from '@mui/material/Input';
 
 // Utilities
 import { DataContext } from '../../utilities/DataContext';
 
+// Pages
+import DefintionPage from '../../features/Definition/DefinitionPage';
+
 // Components
 import AddButton from '../Buttons/AddButton';
+import { Route } from 'react-router-dom';
 
 const cats = [
   {
@@ -105,10 +111,36 @@ const quickAddButtons = {
   flexDirection: 'column',
 };
 
+// Define the FileUpload class for handling file uploads
+class FileUpload {
+  constructor(file) {
+    this.file = file;
+  }
+  async uploadFile() {
+    try {
+      const formData = new FormData();
+      formData.append('csv_file', this.file);
+
+      const response = await axios.post('http://localhost:8000/api/import_data/',  formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        return response.data; // Return response data upon successful upload
+      } else {
+        throw new Error('Failed to upload CSV file');
+      }
+    } catch (error) {
+      throw new Error('Error uploading CSV file:', error);
+    }
+  }
+}
+
 export default function SideBar(props) {
   const { ...other } = props;
   const { categoryData, activeData, setActiveData, setActiveTopic } = useContext(DataContext);
-
 
   const handleCategoryClick = (e, category) => {
     setActiveData(category)
@@ -124,6 +156,36 @@ export default function SideBar(props) {
     setActiveData({})
     setActiveTopic({})
   }
+
+  const handleDefintionClick = (e) => {
+    console.log(e.target.value)
+    props.getMainContent(<DefintionPage />)
+  }
+
+  // File state for file upload
+  const [ file, setFile ] = useState(null);
+
+  // Handle file change
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  }
+
+  // Handle file upload, async because we are making a request to the server
+  const handleFileUpload = async (e) => {
+    e.preventDefault();
+    try {
+      if (file) {
+        const fileUpload = new FileUpload(file);
+        const data = await fileUpload.uploadFile();
+        // Log response data upon successful upload
+        console.log(data);
+      } else {
+        console.error('No file selected');
+      }
+    } catch (error) {
+      console.error('Error uploading CSV file:', error);
+    }
+  };
 
   useEffect(() => {
     
@@ -151,17 +213,17 @@ export default function SideBar(props) {
                 <ListItemText>{category.name}</ListItemText>
               </Button>
             </ListItem>
-            {category.topics.map(( topic ) => (
+            { category.topics ? category.topics.map(( topic ) => (
               <ListItem disablePadding key={topic.topic_id}>
                 <ListItemButton selected={topic.active} sx={item} onClick={(e) => handleTopicClick(e, topic, category)}>
                   <ListItemIcon><SettingsEthernetIcon /></ListItemIcon>
                   <ListItemText>{topic.name}</ListItemText>
                 </ListItemButton>
               </ListItem>
-            ))}
+            )): null }
             <Divider sx={{ mt: 2 }} />
           </Box>
-        )) : null }
+        )) : <h1>Error loading sidebar category data</h1> }
         <Divider sx={{ mt: 2 }} />
 
         {/* { categories ? 
@@ -200,6 +262,13 @@ export default function SideBar(props) {
             </Box>
           ))
         } */}
+
+        <ListItem sx={{ color: '#fff', ...itemCategory, ...quickAddButtons }}>
+          <ListItemText>
+            <Button onClick={handleDefintionClick} value='DefintionPage'>Defintion Table</Button>
+          </ListItemText>
+        </ListItem>
+
         <ListItem sx={{ color: '#fff', ...itemCategory, ...quickAddButtons }}>
           <ListItemText>Quick Add</ListItemText>
           <AddButton name="Category"/>
@@ -208,6 +277,27 @@ export default function SideBar(props) {
           <AddButton name="Notes"/>
           <AddButton name="Analogy"/>
         </ListItem>
+
+        <ListItem sx={{ color: '#fff', ...itemCategory, ...quickAddButtons }}>
+          <ListItemText>Import</ListItemText>
+          <Input
+            type="file"
+            name="csv_file"
+            onChange={handleFileChange}>
+          </Input>
+          <Button
+            sx={{
+              py: '2px',
+              px: 3,
+              color: 'rgba(255, 255, 255, 0.7)',
+              '&:hover, &:focus': {
+                bgcolor: 'rgba(255, 255, 255, 0.08)',
+              },
+            }}
+            onClick={handleFileUpload}
+            >Import Data</Button>
+        </ListItem>
+
       </List>
     </Drawer>
   );

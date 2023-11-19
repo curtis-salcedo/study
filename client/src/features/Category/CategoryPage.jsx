@@ -16,7 +16,7 @@ import TopicPage from '../Topic/TopicPage';
 import TopicForm from '../../components/Forms/TopicForm';
 
 export default function CategoryPage() {
-  const { categoryData, setCategoryData, activeTopic, setActiveTopic,topicsData, activeData } = useContext(DataContext);
+  const { categoryData, setCategoryData, activeTopic, setActiveTopic, topicsData, activeData } = useContext(DataContext);
 
   const [ topic, setTopic ] = useState(false);
 
@@ -28,10 +28,11 @@ export default function CategoryPage() {
     }
   }, [categoryData, activeData, activeTopic]);
 
+  console.log('activeData at Category Page', activeData, activeTopic)
+
   return (
     <Box
       sx={{
-        width: '100%',
         height: '100%',
         display: 'flex',
         justifyContent: 'center',
@@ -42,7 +43,7 @@ export default function CategoryPage() {
           <TopicPage t={activeTopic} />
         :
         <>
-          { activeData.topics.length > 0 ? activeData.topics.map((t) => (
+          { activeData.topics ? activeData.topics.map((t) => (
             <TopicCard t={t} />
           )) : <TopicForm /> }
         </>

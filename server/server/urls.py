@@ -22,7 +22,7 @@ from backend import views
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
+# router.register(r'users', views.UserViewSet)
 router.register(r'userprofiles', views.UserProfileViewSet)
 router.register(r'topics', views.TopicViewSet)
 router.register(r'tags', views.TagsViewSet)
@@ -31,6 +31,9 @@ router.register(r'codeexamples', views.CodeExampleViewSet)
 router.register(r'worddefinitions', views.WordDefinitionViewSet)
 router.register(r'category', views.CategoryViewSet)
 router.register(r'analogy', views.AnalogyViewSet)
+router.register(r'studyplans', views.StudyPlanViewSet)
+router.register(r'contents', views.ContentViewSet)
+router.register(r'definitions', views.DefinitionViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -47,6 +50,9 @@ urlpatterns = [
     # Topic Paths
     path('api/add_topics/', views.add_topics),
 
+    # Content Paths
+    path('api/add_contents/', views.content_view),
+
     # Tag Paths
     path('api/add_tags/', views.add_tags),
 
@@ -61,4 +67,7 @@ urlpatterns = [
 
     # Analogy Paths
     path('api/add_analogies/', views.add_analogies),
+
+    # Import Data Paths
+    path('api/import_data/', views.import_data),
 ]

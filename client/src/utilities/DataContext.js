@@ -9,10 +9,14 @@ export const DataProvider = (props) => {
   const [ activeChoice, setActiveChoice ] = useState([]);
   const [ categoryData, setCategoryData ] = useState([]);
   const [ topicsData, setTopicsData ] = useState([]);
+  const [ notesData, setNotesData ] = useState([]);
+  const [ definitionsData, setDefinitionsData ] = useState([]);
 
   // Variables for category and topic data active choices
   const [ activeData, setActiveData ] = useState({});
   const [ activeTopic, setActiveTopic ] = useState(null);
+  const [ activeNote, setActiveNote ] = useState(null);
+
 
   useEffect(() => {
     fetchData();
@@ -38,11 +42,35 @@ export const DataProvider = (props) => {
       });
     }
 
+  const getNotes = async () => {
+    axios.get('http://localhost:8000/api/notes/')
+      .then((response) => {
+        setNotesData(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+
+  const getDefintions = async () => {
+    axios.get('http://localhost:8000/api/definitions/')
+      .then((response) => {
+        setDefinitionsData(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+
+  // console.log('topicsData should have notes', topicsData)
+
   const fetchData = async () => {
     let user;
     try {
       getCategory();
       getTopics();
+      getNotes();
+      getDefintions();
       // user = await getUser();
       // setUser(user);
     } catch (err) {
@@ -65,7 +93,13 @@ export const DataProvider = (props) => {
         setActiveData,
         activeTopic: activeTopic || null,
         setActiveTopic,
-        }}
+        activeNote: activeNote || null,
+        setActiveNote,
+        notesData: notesData || null,
+        setNotesData,
+        definitionsData: definitionsData || null,
+        setDefinitionsData,
+      }}
       >
       {props.children}
     </DataContext.Provider>

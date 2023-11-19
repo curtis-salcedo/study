@@ -14,13 +14,11 @@ import { DataContext } from '../../utilities/DataContext';
 // Pages
 import Content from '../Content/Content';
 import TopicPage from '../../features/Topic/TopicPage';
+import DefinitionPage from '../../features/Definition/DefinitionPage';
 
 // Components
-import Navigator from '../../components/SideBar/SideBar';
+import SideBar from '../../components/SideBar/SideBar';
 import Header from '../../components/Header/Header';
-import CategoryCard from '../../components/Cards/CategoryCard';
-import TopicCard from '../../components/Cards/TopicCard';
-import DefinitionCard from '../../components/Cards/DefinitionCard';
 import CategoryForm from '../../components/Forms/CategoryForm';
 import TopicForm from '../../components/Forms/TopicForm';
 import DefinitionForm from '../../components/Forms/DefinitionForm';
@@ -191,11 +189,16 @@ export default function Main() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const { activeChoice, setActiveChoice, formSelected, setFormSelected } = useContext(DataContext);
-  const [ mainContent, setMainContent ] = useState(<Content />);
+  const { formSelected } = useContext(DataContext);
+  const [ mainContent, setMainContent ] = useState();
 
   const [ form, setForm ] = useState(null);
   const [ showForm, setShowForm ] = useState(false);
+
+  // Function to fill the mainContent area with the correct pages
+  const getMainContent = (selected) => {
+    setMainContent(selected);
+  }
 
   // Function to populate the correct form based on user choice
   const getForm = (activeChoice) => {
@@ -217,6 +220,7 @@ export default function Main() {
   }
 
   useEffect(() => {
+    setMainContent(<Content />)
     if (formSelected) {
       getForm(formSelected);
     }
@@ -232,16 +236,17 @@ export default function Main() {
           sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         >
           {isSmUp ? null : (
-            <Navigator
+            <SideBar
               PaperProps={{ style: { width: drawerWidth } }}
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
             />
           )}
-          <Navigator
+          <SideBar
             PaperProps={{ style: { width: drawerWidth } }}
             sx={{ display: { sm: 'block', xs: 'none' } }}
+            getMainContent={getMainContent}
           />
         </Box>
 

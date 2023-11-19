@@ -4,8 +4,8 @@ from .models import Topic
 
 # Create your tests here.
 class UserViewSet(TestCase):
-  def test_user_view_set(self):
-    self.assertEqual(1, 1)
+    def test_user_view_set(self):
+        self.assertEqual(1, 1)
 
 class TopicTestCase(TestCase):
     def test_create_model_topic(self):

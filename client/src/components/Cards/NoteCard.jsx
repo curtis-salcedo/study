@@ -28,11 +28,13 @@ export default function NoteCard({ note }) {
   return (
       <Card
         elevation={3}
-        sx={{ cursor: 'pointer',
-        width: 200,
-        height: 200,
-        margin: 1,
-        overflow: 'hidden' }}
+        sx={{ 
+          cursor: 'pointer',
+          width: '25px',
+          height: '25px',
+          margin: 1,
+          overflow: 'hidden' 
+        }}
       >
       <CardHeader align='center' title={note.topic} />
 
