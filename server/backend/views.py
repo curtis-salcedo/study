@@ -117,30 +117,28 @@ from .serializers import (
     # UserSerializer,
     UserProfileSerializer,
     TagSerializer,
-    TopicSerializer,
-    NoteSerializer,
-    CodeExampleSerializer,
-    WordDefinitionSerializer,
+    SubjectSerializer,
     CategorySerializer,
-    AnalogySerializer,
-    StudyPlanSerializer,
+    TopicSerializer,
     ContentSerializer,
+    NoteSerializer,
     DefinitionSerializer,
+    ReferenceSerializer,
+    ExampleSerializer,
 )
 
 from .models import (
     # User,
     UserProfile,
     Tag,
-    Topic,
-    Note,
-    CodeExample,
-    WordDefinition,
+    Subject,
     Category,
-    Analogy,
+    Topic,
     Content,
-    StudyPlan,
+    Note,
     Definition,
+    Reference,
+    Example,
 )
 
 # class UserViewSet(viewsets.ModelViewSet):
@@ -151,13 +149,21 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     serializer_class = UserProfileSerializer
     queryset = UserProfile.objects.all()
 
+class TagsViewSet(viewsets.ModelViewSet):
+    serializer_class = TagSerializer
+    queryset = Tag.objects.all()
+
+class SubjectViewSet(viewsets.ModelViewSet):
+    serializer_class = SubjectSerializer
+    queryset = Subject.objects.all()
+    
+class CategoryViewSet(viewsets.ModelViewSet):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+
 class TopicViewSet(viewsets.ModelViewSet):
     serializer_class = TopicSerializer
     queryset = Topic.objects.all()
-
-class StudyPlanViewSet(viewsets.ModelViewSet):
-    serializer_class = StudyPlanSerializer
-    queryset = StudyPlan.objects.all()
 
 class ContentViewSet(viewsets.ModelViewSet):
     serializer_class = ContentSerializer
@@ -167,29 +173,17 @@ class NoteViewSet(viewsets.ModelViewSet):
     serializer_class = NoteSerializer
     queryset = Note.objects.all()
 
-class CodeExampleViewSet(viewsets.ModelViewSet):
-    serializer_class = CodeExampleSerializer
-    queryset = CodeExample.objects.all()
-
-class WordDefinitionViewSet(viewsets.ModelViewSet):
-    serializer_class = WordDefinitionSerializer
-    queryset = WordDefinition.objects.all()
-
-class TagsViewSet(viewsets.ModelViewSet):
-    serializer_class = TagSerializer
-    queryset = Tag.objects.all()
-
-class CategoryViewSet(viewsets.ModelViewSet):
-    serializer_class = CategorySerializer
-    queryset = Category.objects.all()
-
-class AnalogyViewSet(viewsets.ModelViewSet):
-    serializer_class = AnalogySerializer
-    queryset = Analogy.objects.all()
-
 class DefinitionViewSet(viewsets.ModelViewSet):
     serializer_class = DefinitionSerializer
     queryset = Definition.objects.all()
+    
+class ReferenceViewSet(viewsets.ModelViewSet):
+    serializer_class = ReferenceSerializer
+    queryset = Reference.objects.all()
+
+class ExampleViewSet(viewsets.ModelViewSet):
+    serializer_class = ExampleSerializer
+    queryset = Example.objects.all()
 
 @api_view(['POST'])
 def add_categories(request):
@@ -270,29 +264,20 @@ def add_notes(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
-def add_code_examples(request):
-    serializer = CodeExampleSerializer(data=request.data)
+def add_examples(request):
+    serializer = ExampleSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
-def add_word_definitions(request):
-    serializer = WordDefinitionSerializer(data=request.data)
+def add_definitions(request):
+    serializer = DefinitionSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['POST'])
-def add_analogies(request):
-    serializer = AnalogySerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 @api_view(['POST'])
 def import_data(request):

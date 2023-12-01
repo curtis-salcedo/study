@@ -24,16 +24,15 @@ from backend import views
 router = routers.DefaultRouter()
 # router.register(r'users', views.UserViewSet)
 router.register(r'userprofiles', views.UserProfileViewSet)
-router.register(r'topics', views.TopicViewSet)
 router.register(r'tags', views.TagsViewSet)
-router.register(r'notes', views.NoteViewSet)
-router.register(r'codeexamples', views.CodeExampleViewSet)
-router.register(r'worddefinitions', views.WordDefinitionViewSet)
-router.register(r'category', views.CategoryViewSet)
-router.register(r'analogy', views.AnalogyViewSet)
-router.register(r'studyplans', views.StudyPlanViewSet)
+router.register(r'subjects', views.SubjectViewSet)
+router.register(r'categoreis', views.CategoryViewSet)
+router.register(r'topics', views.TopicViewSet)
 router.register(r'contents', views.ContentViewSet)
+router.register(r'notes', views.NoteViewSet)
 router.register(r'definitions', views.DefinitionViewSet)
+router.register(r'references', views.ReferenceViewSet)
+router.register(r'examples', views.ExampleViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -60,13 +59,10 @@ urlpatterns = [
     path('api/add_notes/', views.add_notes),
 
     # Code Example Paths
-    path('api/add_code_examples/', views.add_code_examples),
+    path('api/add_examples/', views.add_examples),
 
     # Word Definition Paths
-    path('api/add_word_definitions/', views.add_word_definitions),
-
-    # Analogy Paths
-    path('api/add_analogies/', views.add_analogies),
+    path('api/add_definitions/', views.add_definitions),
 
     # Import Data Paths
     path('api/import_data/', views.import_data),

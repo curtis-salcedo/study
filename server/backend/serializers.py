@@ -63,15 +63,14 @@ from .models import (
     # User,
     UserProfile,
     Tag,
-    Topic,
-    Note,
-    CodeExample,
-    WordDefinition,
+    Subject,
     Category,
-    Analogy,
+    Topic,
     Content,
-    StudyPlan,
+    Note,
     Definition,
+    Reference,
+    Example,
 )
 
 class AuthUserSerializer(serializers.ModelSerializer):
@@ -90,25 +89,15 @@ class TagSerializer(serializers.ModelSerializer):
         model = Tag
         fields = ['tag_id', 'name', 'description']
 
+class SubjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subject
+        fields = '__all__'
+
 class CategorySerializer(serializers.ModelSerializer):
     topics = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = Category
-        fields = '__all__'
-
-class StudyPlanSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StudyPlan
-        fields = '__all__'
-
-class ContentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Content
-        fields = '__all__'
-
-class ContentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Content
         fields = '__all__'
 
 class TopicSerializer(serializers.ModelSerializer):
@@ -124,27 +113,27 @@ class TopicSerializer(serializers.ModelSerializer):
         except:
             return None
 
+class ContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Content
+        fields = '__all__'
+
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = '__all__'
 
-class CodeExampleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CodeExample
-        fields = '__all__'
-
-class WordDefinitionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = WordDefinition
-        fields = '__all__'
-
-class AnalogySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Analogy
-        fields = '__all__'
-
 class DefinitionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Definition
+        fields = '__all__'
+
+class ReferenceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reference
+        fields = '__all__'
+
+class ExampleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Example
         fields = '__all__'

@@ -35,10 +35,10 @@ export default function DefintionTable() {
         <TableHead>
           <TableRow>
             <TableCell>Word</TableCell>
-            <TableCell align="right">Definition</TableCell>
-            <TableCell align="right">Notes</TableCell>
-            <TableCell align="right">Sources</TableCell>
-            <TableCell align="right">Tags</TableCell>
+            <TableCell align="left">Definition</TableCell>
+            <TableCell align="left">Notes</TableCell>
+            <TableCell align="left">Sources</TableCell>
+            <TableCell align="left">Tags</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -50,10 +50,14 @@ export default function DefintionTable() {
               <TableCell component="th" scope="row">
                 {word.word}
               </TableCell>
-              <TableCell align="right">{word.definition}</TableCell>
-              <TableCell align="right">{word.notes}</TableCell>
-              <TableCell align="right">{word.defintion_id}</TableCell>
-              <TableCell align="right">null</TableCell>
+              <TableCell align="left">{word.definition}</TableCell>
+              <TableCell align="left">{word.notes}</TableCell>
+              <TableCell align="left">{word.defintion_id}</TableCell>
+              <TableCell align="left">{word.tags.map((tag) => {
+                return (
+                  <Box key={tag.tag_id}>{tag.tag_name}</Box>
+                )
+              })}</TableCell>
             </TableRow>
           ))}
         </TableBody>
