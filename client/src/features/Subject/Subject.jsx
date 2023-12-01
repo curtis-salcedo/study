@@ -91,9 +91,9 @@ export default function Subject() {
         </Typography>
 
         <Grid container spacing={2}>
-          { subjects && subjects.subjects.length > 0 ? (
+          { subjects && subjects.length > 0 ? (
             // Conditional check to ensure subjects exist and it's not an empty array
-            subjects.subjects.map((subject, index) => (
+            subjects.map((subject, index) => (
               <Grid item xs={12} md={6} key={index}>
                 <Paper elevation={3} sx={{ p: 2, textAlign: 'center', height: '100%' }}>
                   <Typography variant="h6" gutterBottom>
