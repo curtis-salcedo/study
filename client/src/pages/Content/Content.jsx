@@ -14,6 +14,7 @@ import CategoryCard from '../../components/Cards/CategoryCard';
 // Pages
 import TopicPage from '../../features/Topic/TopicPage';
 import CategoryPage from '../../features/Category/CategoryPage';
+import SubjectPage from '../../features/Subject/Subject';
 
 // Utilities
 import { DataContext } from '../../utilities/DataContext';
@@ -35,7 +36,7 @@ export default function Content() {
           height: '100%',
           width: '100%',
         }}>
-          <CategoryPage />
+          <SubjectPage />
         </Box>
       : 
         <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">

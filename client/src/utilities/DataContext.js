@@ -19,7 +19,7 @@ export const DataProvider = (props) => {
 
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, []);
 
   const getCategory = async () => {

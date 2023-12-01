@@ -15,6 +15,7 @@ import { DataContext } from '../../utilities/DataContext';
 import Content from '../Content/Content';
 import TopicPage from '../../features/Topic/TopicPage';
 import DefinitionPage from '../../features/Definition/DefinitionPage';
+import Subject from '../../features/Subject/Subject';
 
 // Components
 import SideBar from '../../components/SideBar/SideBar';
@@ -220,7 +221,7 @@ export default function Main() {
   }
 
   useEffect(() => {
-    setMainContent(<Content />)
+    setMainContent(<Subject />)
     if (formSelected) {
       getForm(formSelected);
     }
