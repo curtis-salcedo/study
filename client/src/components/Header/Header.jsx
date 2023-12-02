@@ -29,16 +29,19 @@ export default function Header(props) {
   const { activeData, activeTopic } = useContext(DataContext);
 
   return (
-    <React.Fragment>
+    <>
       <AppBar color="primary" position="sticky" elevation={0}>
         <Toolbar>
           
           <Grid container spacing={2} alignItems="center">
-            <Grid item>
-              <SearchIcon color="inherit" sx={{ display: 'block' }} />
+            
+            <Grid item sx={{ display: { sm: 'block', xs: 'none' } }}>
+              <SearchIcon color="inherit" sx={{ display: 'block' }}/>
             </Grid>
+
             <Grid item xs>
               <TextField
+                sx={{ display: { sm: 'block', xs: 'none' } }}
                 fullWidth
                 placeholder="Search by email address, phone number, or user UID"
                 InputProps={{
@@ -61,6 +64,7 @@ export default function Header(props) {
                 <MenuIcon />
               </IconButton>
             </Grid>
+            
             <Grid item xs />
               {/* <Grid item>
                 <Link
@@ -79,6 +83,26 @@ export default function Header(props) {
                   Go to docs
                 </Link>
               </Grid> */}
+
+              <Grid item sx={{ display: { sm: 'none', xs: 'none' } }}>
+                <Button
+                  sx={{ borderColor: lightColor }}
+                  variant="outlined"
+                  color="inherit"
+                  size="small"
+                >
+                  Setup
+                </Button>
+              </Grid>
+  
+              <Grid item sx={{ display: { sm: 'none', xs: 'none' } }}>
+                <Tooltip title="Help">
+                  <IconButton color="inherit">
+                    <HelpIcon />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+
               <Grid item>
                 <Tooltip title="Alerts • No alerts">
                   <IconButton color="inherit">
@@ -86,61 +110,17 @@ export default function Header(props) {
                   </IconButton>
                 </Tooltip>
               </Grid>
+
               <Grid item>
                 <IconButton color="inherit" sx={{ p: 0.5 }}>
                   <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
                 </IconButton>
               </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
 
-      <AppBar
-        component="div"
-        color="primary"
-        position="static"
-        elevation={0}
-        sx={{ zIndex: 0 }}
-      >
-        <Toolbar>
-          <Grid container alignItems="center" spacing={1}>
-            <Grid item xs>
-              <Typography color="inherit" variant="h5" component="h1">
-                <Grid>
-                  { activeData.name ? activeData.name  : 'Study Buddy' }
-                  { activeTopic ? `  -   ${activeTopic.name}`  : null }
-                </Grid>
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Button
-                sx={{ borderColor: lightColor }}
-                variant="outlined"
-                color="inherit"
-                size="small"
-              >
-                Setup
-              </Button>
-            </Grid>
-            <Grid item>
-              <Tooltip title="Help">
-                <IconButton color="inherit">
-                  <HelpIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
+
           </Grid>
         </Toolbar>
       </AppBar>
-      {/* <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
-        <Tabs value={0} textColor="inherit">
-          <Tab label="Category" />
-          <Tab label="Topic" />
-          <Tab label="Notes" />
-          <Tab label="Definition" />
-          <Tab label="Concept" />
-        </Tabs>
-      </AppBar> */}
-    </React.Fragment>
+    </>
   );
 }

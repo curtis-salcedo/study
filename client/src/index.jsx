@@ -6,7 +6,7 @@ import { DataProvider } from './utilities/DataContext';
 
 
 import App from './app/App';
-import Main from './pages/Main/Main';
+import Main from './pages/Home/Home';
 
 import './index.css';
 

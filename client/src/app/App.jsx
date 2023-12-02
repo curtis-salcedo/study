@@ -10,8 +10,9 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
 // Pages
-import Main from '../pages/Main/Main';
+import Main from '../pages/Home/Home';
 import Subject from '../features/Subject/Subject';
+import SubjectPage from '../features/Subject/SubjectPage';
 import Category from '../features/Category/Category';
 
 // Components
@@ -226,6 +227,7 @@ export default function App() {
             <Routes>
               <Route path="*" element={<Main />} />
               <Route path="/subjects" element={<Subject />} />
+              <Route path="/subjects/:id" element={<SubjectPage />} />
               <Route path="/categories" element={<Category />} />
             </Routes>
           </Router>

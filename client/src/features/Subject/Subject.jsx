@@ -1,34 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as subjectSlice from '../../reducers/subjectSlice';
-import addSubjectAsync from '../../actions/subjectActions';
-import fetchSubjectsAsync from '../../actions/subjectActions';
+import * as subjectSlice from './subjectSlice';
+
+// Router imports
+import { Link } from 'react-router-dom';
+import SubjectPage from './SubjectPage';
+
+// State Management imports
+import {
+  fetchSubjects,
+  addSubjects,
+  deleteSubjects,
+  setActiveSubject,
+} from './subjectActions';
 
 // Style imports
 import {
   Grid,
   Paper,
   Typography,
-  TextField,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
   Button,
   Box,
+  TextField,
 } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Subject() {
   const dispatch = useDispatch();
   const subjects = useSelector(state => state.subjects);
+  const activeSubject = useSelector(state => state.activeSubject); // Assuming activeSubject is stored in Redux state
+  const [showForm, setShowForm] = useState(false);
   const [newSubject, setNewSubject] = useState({
     name: '',
     description: '',
   });
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [selectedSubject, setSelectedSubject] = useState(null);
 
   const handleAddSubject = () => {
     dispatch(subjectSlice.addSubject(newSubject));
-    dispatch(addSubjectAsync(newSubject));
+    dispatch(addSubjects(newSubject));
     setNewSubject({
       name: '',
       description: '',
     });
+    setShowForm(false);
   };
 
   const handleChange = (e) => {
@@ -41,8 +62,29 @@ export default function Subject() {
 
   useEffect(() => {
     // Fetch subjects when the component mounts
-    
   }, []);
+
+  const handleDeleteClick = (subject) => {
+    setSelectedSubject(subject);
+    setDeleteConfirmation(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    // Delete logic for the selected subject (e.g., dispatch action to remove from Redux state)
+    dispatch(deleteSubjects(selectedSubject.id));
+    setDeleteConfirmation(false);
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteConfirmation(false);
+  };
+
+  const handleClick = (subject) => {
+    // Handle logic for when a subject is clicked (e.g., dispatch action to set active subject in Redux state)
+    console.log(subject)
+    // setSelectedSubject(subject);
+    dispatch(setActiveSubject({subject}));
+  };
 
   console.log('subjects', subjects)
 
@@ -54,7 +96,7 @@ export default function Subject() {
         justifyContent: 'center',
         alignItems: 'center',
         padding: '20px',
-        maxWidth: '400px',
+        maxWidth: '600px',
         margin: 'auto',
       }}
     >
@@ -95,13 +137,22 @@ export default function Subject() {
             // Conditional check to ensure subjects exist and it's not an empty array
             subjects.map((subject, index) => (
               <Grid item xs={12} md={6} key={index}>
-                <Paper elevation={3} sx={{ p: 2, textAlign: 'center', height: '100%' }}>
-                  <Typography variant="h6" gutterBottom>
-                    {subject.name}
-                  </Typography>
-                  <Typography variant="body1">
-                    {subject.description}
-                  </Typography>
+                <Paper
+                  elevation={3}
+                  sx={{ p: 2, textAlign: 'center', height: '100%', cursor: 'pointer' }}
+                  onClick={() => handleClick(subject)}
+                  >
+                  <Link to={`/subjects/${subject.id}`} style={{ textDecoration: 'none' }}>
+                    <Typography variant="h6" gutterBottom>
+                      {subject.name}
+                    </Typography>
+                    <Typography variant="body1">
+                      {subject.description}
+                    </Typography>
+                    <IconButton onClick={() => handleDeleteClick(subject)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Link>
                 </Paper>
               </Grid>
             ))
@@ -113,8 +164,27 @@ export default function Subject() {
               </Typography>
             </Grid>
           )}
+          
         </Grid>
       </Box>
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={deleteConfirmation}
+        onClose={handleDeleteCancel}
+      >
+        <DialogTitle>Delete Subject</DialogTitle>
+        <DialogContent>
+          <Typography variant="body1">
+            Are you sure you want to delete this subject?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel}>Cancel</Button>
+          <Button onClick={handleDeleteConfirm} variant="contained" color="error">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {/* You can map through 'subjects' to render them */}
 

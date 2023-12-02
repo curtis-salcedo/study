@@ -19,7 +19,7 @@ import { configureStore } from '@reduxjs/toolkit';
 // export default store;
 
 import rootReducer from '../reducers/rootReducer';
-import { fetchSubjects } from '../actions/subjectActions';
+import { fetchSubjects } from '../features/Subject/subjectActions';
 
 // Create the Redux store with the specified reducer
 const store = configureStore({
