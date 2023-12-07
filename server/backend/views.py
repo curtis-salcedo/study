@@ -1,112 +1,3 @@
-# from django.shortcuts import render
-# from django.http import JsonResponse
-
-# # Rest Framework imports
-# from rest_framework.decorators import api_view
-# from rest_framework.response import Response
-# from rest_framework import viewsets, status, serializers
-
-# import json
-
-# # Serializer imports
-# from .serializers import UserSerializer, UserProfileSerializer, TagSerializer, TopicSerializer, NoteSerializer, CodeExampleSerializer, WordDefinitionSerializer, CategorySerializer, AnalogySerializer
-
-# # Model imports
-# from .models import User, UserProfile, Tag, Topic, Note, CodeExample, WordDefinition, Category, Analogy
-
-# class UserViewSet(viewsets.ModelViewSet):
-#   serializer_class = UserSerializer
-#   queryset = User.objects.all()
-
-# class UserProfileViewSet(viewsets.ModelViewSet):
-#   serializer_class = UserProfileSerializer
-#   queryset = UserProfile.objects.all()
-
-# class TopicViewSet(viewsets.ModelViewSet):
-#   serializer_class = TopicSerializer
-#   queryset = Topic.objects.all()
-
-# class NoteViewSet(viewsets.ModelViewSet):
-#   serializer_class = NoteSerializer
-#   queryset = Note.objects.all()
-
-# class CodeExampleViewSet(viewsets.ModelViewSet):
-#   serializer_class = CodeExampleSerializer
-#   queryset = CodeExample.objects.all()
-
-# class WordDefinitionViewSet(viewsets.ModelViewSet):
-#   serializer_class = WordDefinitionSerializer
-#   queryset = WordDefinition.objects.all()
-
-# class TagsViewSet(viewsets.ModelViewSet):
-#   serializer_class = TagSerializer
-#   queryset = Tag.objects.all()
-
-# class CategoryViewSet(viewsets.ModelViewSet):
-#   serializer_class = CategorySerializer
-#   queryset = Category.objects.all()
-
-# class AnalogyViewSet(viewsets.ModelViewSet):
-#   serializer_class = AnalogySerializer
-#   queryset = Analogy.objects.all()
-
-# @api_view(['POST'])
-# def add_categories(request):
-#   print(request.data)
-#   serializer = CategorySerializer(data=request.data)
-#   if serializer.is_valid():
-#     serializer.save()
-#   return Response(serializer.data)
-
-# @api_view(['POST'])
-# def add_topics(request):
-#     print(request.data)
-#     category = Category.objects.get(category_id=request.data['category_id'])
-#     new_topic = Topic.objects.create(name=request.data['name'], description=request.data['description'], category=category, url=request.data  ['url'])
-#     new_topic.save()
-#     return Response(TopicSerializer(new_topic).data)
-
-# @api_view(['POST'])
-# def add_tags(request):
-#   print(request.data)
-#   serializer = TagSerializer(data=request.data)
-#   if serializer.is_valid():
-#     serializer.save()
-#   return Response(serializer.data)
-
-# @api_view(['POST'])
-# def add_notes(request):
-#   print(request.data)
-#   topic = Topic.objects.get(topic_id=request.data['topic'])
-#   new_note = Note.objects.create(topic=topic, content=request.data['content'])
-#   new_note.save()
-#   return Response(NoteSerializer(new_note).data)
-
-# @api_view(['POST'])
-# def add_code_examples(request):
-#   print(request.data)
-#   serializer = CodeExampleSerializer(data=request.data)
-#   if serializer.is_valid():
-#     serializer.save()
-#   return Response(serializer.data)
-
-# @api_view(['POST'])
-# def add_word_definitions(request):
-#   print(request.data)
-#   serializer = WordDefinitionSerializer(data=request.data)
-#   if serializer.is_valid():
-#     serializer.save()
-#   return Response(serializer.data)
-
-# @api_view(['POST'])
-# def add_analogies(request):
-#   print(request.data)
-#   serializer = AnalogySerializer(data=request.data)
-#   if serializer.is_valid():
-#     serializer.save()
-#   return Response(serializer.data)
-
-
 import csv
 from rest_framework import viewsets, status, serializers
 from rest_framework.decorators import api_view
@@ -335,3 +226,16 @@ def import_data(request):
         return JsonResponse({'message': 'CSV data processed successfully'})
     else:
         return JsonResponse({'error': 'No file or invalid request method'})
+    
+@api_view(['GET'])
+def details(request, pk):
+    try:
+        subject = Subject.objects.get(id=pk)
+        print('Inside details view', subject)
+        try:
+            categories = Category.objects.filter(subject_id=subject)
+            print('Inside details view', subject, 'Inside the details view is more data for categories', categories)
+        except:
+            return JsonResponse([])
+    except Subject.DoesNotExist:
+        return JsonResponse("Subject does not exist")

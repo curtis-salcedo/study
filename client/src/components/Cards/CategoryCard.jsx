@@ -24,7 +24,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 // Component
-import TopicCard from './TopicCard';
+import TopicCard from '../../features/topics/TopicCard';
 
 // Utilities
 import { DataContext } from '../../utilities/DataContext';

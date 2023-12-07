@@ -32,6 +32,7 @@ import DefintionPage from '../../features/Definition/DefinitionPage';
 // Components
 import AddButton from '../Buttons/AddButton';
 import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const cats = [
   {
@@ -153,8 +154,7 @@ export default function SideBar(props) {
   }
 
   const handleHomeClick = () => {
-    setActiveData({})
-    setActiveTopic({})
+    window.location.href = '/';
   }
 
   const handleDefintionClick = (e) => {
@@ -197,7 +197,7 @@ export default function SideBar(props) {
         <ListItem sx={{ fontSize: 22, color: '#fff', justifyContent: 'center' }}>
           Study Buddy
         </ListItem>
-
+      
         <ListItem sx={{ ...item, ...itemCategory, cursor: 'pointer' }} onClick={handleHomeClick}>
           <ListItemIcon>
             <HomeIcon />

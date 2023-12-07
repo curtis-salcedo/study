@@ -19,11 +19,14 @@ import { configureStore } from '@reduxjs/toolkit';
 // export default store;
 
 import rootReducer from '../reducers/rootReducer';
-import { fetchSubjects } from '../features/Subject/subjectActions';
+import { fetchSubjects } from '../features/subjects/subjectActions';
+import { fetchCategories } from '../features/Category/categoriesActions';
+import subjectsReducer from '../features/subjects/subjectsSlice';
 
 // Create the Redux store with the specified reducer
 const store = configureStore({
   reducer: rootReducer,
+  subjects: subjectsReducer,
 });
 
 // const store = configureStore({
@@ -34,7 +37,8 @@ const store = configureStore({
 // });
 
 store.dispatch(fetchSubjects());
+store.dispatch(fetchCategories());
 
-console.log('store.getState(): ', store.getState());
+// console.log('store.getState(): ', store.getState());
 
 export default store;

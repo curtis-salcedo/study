@@ -8,8 +8,8 @@ const rootUrl = 'http://localhost:8000/api';
 export const fetchCategories = () => {
   return async (dispatch) => {
     try {
-      // Call GET API function  
-      const response = await axios.get(`${rootUrl}/categories`); 
+      // Call GET API function
+      const response = await axios.get(`${rootUrl}/categories/`); 
       // Dispatch action when response data is received
       dispatch({
         type: types.FETCH_CATEGORIES,
@@ -17,7 +17,7 @@ export const fetchCategories = () => {
       });
     } catch (error) {
       // Handle error if API call fails
-      console.error('Error fetching subjects:', error);
+      console.error('Error fetching categories:', error);
       // Optionally dispatch an error action
       // dispatch({ type: types.FETCH_SUBJECTS_ERROR, payload: error });
     }
@@ -29,16 +29,23 @@ export const addCategories = (newCategory) => {
   console.log('newCategory created at categoryActions =>', newCategory)
   return async (dispatch) => {
     try {
-      console.log('newCategory created at categoryActions =>', newCategory)
       const response = await axios.post(`${rootUrl}/categories/`, newCategory); 
       dispatch({
         type: types.ADD_CATEGORY,
         payload: response.data
       });
     } catch (error) {
-      console.error('Error fetching subjects:', error);
+      console.error('Error fetching categories:', error);
       // Optionally dispatch an error action
       // dispatch({ type: types.FETCH_SUBJECTS_ERROR, payload: error });
     }
   };
-}
+};
+
+// Action creator to set the active category
+export const setActiveCategory = (category) => {
+  return {
+    type: types.SET_ACTIVE_CATEGORY,
+    payload: category
+  };
+};

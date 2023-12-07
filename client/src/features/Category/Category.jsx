@@ -10,9 +10,9 @@ import {
 import { DataContext } from '../../utilities/DataContext';
 
 // Components
-import TopicCard from '../../components/Cards/TopicCard';
+import TopicCard from '../topics/TopicCard';
 
-import TopicPage from '../Topic/TopicPage';
+import TopicPage from '../topics/TopicPage';
 import TopicForm from '../../components/Forms/TopicForm';
 
 export default function Category() {

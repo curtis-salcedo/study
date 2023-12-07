@@ -20,6 +20,8 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 
 import AddButton from '../Buttons/AddButton';
 
+import NavBar from '../NavBar/NavBar';
+
 import { DataContext } from '../../utilities/DataContext';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
@@ -65,24 +67,10 @@ export default function Header(props) {
               </IconButton>
             </Grid>
             
+            <Grid item sx={{ display: { sm: 'block', xs: 'none' } }}>
+              <NavBar />
+            </Grid>
             <Grid item xs />
-              {/* <Grid item>
-                <Link
-                  href="/"
-                  variant="body2"
-                  sx={{
-                    textDecoration: 'none',
-                    color: lightColor,
-                    '&:hover': {
-                      color: 'common.white',
-                    },
-                  }}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  Go to docs
-                </Link>
-              </Grid> */}
 
               <Grid item sx={{ display: { sm: 'none', xs: 'none' } }}>
                 <Button

@@ -1,12 +1,16 @@
 // File to store all the constants for the actions of redux
 
+// TRACKING ACTIVE DATA
+export const SET_ACTIVE_SUBJECT = 'SET_ACTIVE_SUBJECT';
+export const SET_ACTIVE_CATEGORY = 'SET_ACTIVE_CATEGORY';
+export const SET_ACTIVE_TOPIC = 'SET_ACTIVE_TOPIC';
+
 // SUBJECTS
 export const FETCH_SUBJECTS = 'FETCH_SUBJECTS';
 export const ADD_SUBJECT = 'ADD_SUBJECT';
 export const DELETE_SUBJECT = 'DELETE_SUBJECT';
 export const UPDATE_SUBJECT = 'UPDATE_SUBJECT';
 export const ACTIVE_SUBJECT = 'ACTIVE_SUBJECT';
-export const SET_ACTIVE_SUBJECT = 'SET_ACTIVE_SUBJECT';
 
 // CATEGORIES
 export const FETCH_CATEGORIES = 'FETCH_CATEGORIES';
@@ -14,3 +18,10 @@ export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
 export const ACTIVE_CATEGORY = 'ACTIVE_CATEGORY';
+
+// TOPICS
+export const FETCH_TOPICS = 'FETCH_TOPICS';
+export const ADD_TOPIC = 'ADD_TOPIC';
+export const DELETE_TOPIC = 'DELETE_TOPIC';
+export const UPDATE_TOPIC = 'UPDATE_TOPIC';
+export const ACTIVE_TOPIC = 'ACTIVE_TOPIC';

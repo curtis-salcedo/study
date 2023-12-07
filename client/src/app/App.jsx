@@ -11,9 +11,10 @@ import Link from '@mui/material/Link';
 
 // Pages
 import Main from '../pages/Home/Home';
-import Subject from '../features/Subject/Subject';
-import SubjectPage from '../features/Subject/SubjectPage';
+import Subject from '../features/subjects/Subject';
+import SubjectPage from '../features/subjects/SubjectPage';
 import Category from '../features/Category/Category';
+import CategoryPage from '../features/Category/CategoryPage';
 
 // Components
 import SideBar from '../components/SideBar/SideBar';
@@ -21,8 +22,6 @@ import Header from '../components/Header/Header';
 
 // Router testing
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
-
 
 function Copyright() {
   return (
@@ -229,6 +228,7 @@ export default function App() {
               <Route path="/subjects" element={<Subject />} />
               <Route path="/subjects/:id" element={<SubjectPage />} />
               <Route path="/categories" element={<Category />} />
+              <Route path="/categories/:id" element={<CategoryPage />} />
             </Routes>
           </Router>
 

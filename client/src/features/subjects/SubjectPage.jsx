@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as subjectSlice from './subjectSlice';
+import * as subjectSlice from './subjectsSlice';
 import { Link } from 'react-router-dom';
+
+import CategoriesList from '../Category/CategoriesList';
 
 import {
   addCategories,
+  fetchCategories,
 } from '../Category/categoriesActions';
 
 
@@ -27,27 +30,26 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function SubjectPage() {
   const dispatch = useDispatch();
-  const activeSubject = useSelector(state => state.activeSubject);
-  const categories = useSelector(state => state.categories);
-
-  console.log(useSelector(state => state.activeSubject.id))
-
+  const activeSubject = useSelector(state => state.activeData.activeSubject);
+  const [ showForm, setShowForm ] = useState(false);
+  const [ categories, setCategories ] = useState([]); // activeSubject.categories
+  
   const [ newCategory, setNewCategory ] = useState({
-    subject_id: `${activeSubject.id}`,
+    subject: activeSubject.id,
     name: '',
     description: '',
   });
-  const [ showForm, setShowForm ] = useState(false);
 
+  
   useEffect(() => {
-    console.log('SubjectPage useEffect', activeSubject);
-  }, []);
+    // Fetch subjects when the component mounts    
+    setCategories(activeSubject.categories);
+  }, [activeSubject ]);
 
   const handleAddSubject = () => {
-    dispatch(subjectSlice.addSubject(newCategory));
     dispatch(addCategories(newCategory));
     setNewCategory({
-      subject: activeSubject.id,
+      subject: activeSubject.id ? activeSubject.id : null,
       name: '',
       description: '',
     });
@@ -71,6 +73,7 @@ export default function SubjectPage() {
         alignItems: 'center',
         padding: '20px',
         maxWidth: '600px',
+        width: '100%',
         margin: 'auto',
       }}
     >
@@ -105,20 +108,22 @@ export default function SubjectPage() {
           Categories for { activeSubject ? activeSubject.name : null }
         </Typography>
 
-        <Grid container spacing={2}>
+        <CategoriesList categories={categories} />
+
+        {/* <Grid container spacing={2}>
           { categories && categories.length > 0 ? (
-            categories.map((subject, index) => (
+            categories.map((category, index) => (
               <Grid item xs={12} md={6} key={index}>
                 <Card
                   elevation={3}
                   // onClick={() => handleClick(subject)}
                 >
-                  <Link to={`/subjects/${subject.id}`} style={{ textDecoration: 'none' }}>
+                  <Link to={`/categories/${category.id}`} style={{ textDecoration: 'none' }}>
                     <Typography variant="h6" sx={{ marginBottom: 1 }}>
-                      {subject.name}
+                      {category.name}
                     </Typography>
                     <Typography variant="body1" sx={{ marginBottom: 2 }}>
-                      {subject.description}
+                      {category.description}
                     </Typography>
                     <IconButton>
                       <DeleteIcon sx={{ color: 'error.main' }} />
@@ -134,7 +139,7 @@ export default function SubjectPage() {
               </Typography>
             </Grid>
           )}
-        </Grid>
+        </Grid> */}
       </Box>
 
       {/* Delete Confirmation Dialog */}

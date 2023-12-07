@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User as AuthUser
+from django.urls import reverse
 
 class UserProfile(models.Model):
     user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
@@ -11,25 +12,25 @@ class Tag(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
     def __str__(self):
         return f"{self.name} - Tag"
 
 class Subject(models.Model):
     name = models.CharField(max_length=100)
     description = description = models.TextField(blank=True, null=True)
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    slug = models.SlugField(null=True)
 
     def __str__(self):
         return self.name
+    def get_absolute_url(self):
+        return reverse('subject-detail', kwargs={'slug': self.slug})
 
 class Category(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -40,11 +41,8 @@ class Category(models.Model):
 class Topic(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     type = models.CharField(max_length=50, blank=True, null=True)
-    duration = models.IntegerField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    url = models.CharField(max_length=255, blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -58,7 +56,6 @@ class Content(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     details = models.TextField()
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -68,22 +65,25 @@ class Content(models.Model):
 class Note(models.Model):
     title = models.CharField(max_length=255)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
-    content = models.TextField()
+    summary = models.TextField()
     tags = models.ManyToManyField(Tag, blank=True)
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.title} - Note"
     
+class BulletPoint(models.Model):
+    note = models.ForeignKey(Note, on_delete=models.CASCADE, related_name='bullet_points')
+    content = models.TextField()
+
+    def __str__(self):
+        return f"{self.note.title} - Bullet Point"
+    
 class Definition(models.Model):
-    # definition_id = models.AutoField(primary_key=True)
-    sub_category = models.CharField(max_length=255)
     term = models.CharField(max_length=255)
     definition = models.TextField()
     tags = models.ManyToManyField(Tag)
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -94,7 +94,6 @@ class Reference(models.Model):
     title = models.CharField(max_length=200)
     url = models.URLField(blank=True, null=True)
     details = models.TextField()
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

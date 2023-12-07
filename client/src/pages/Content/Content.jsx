@@ -13,9 +13,9 @@ import AddButton from '../../components/Buttons/AddButton';
 import CategoryCard from '../../components/Cards/CategoryCard';
 
 // Pages
-import TopicPage from '../../features/Topic/TopicPage';
+import TopicPage from '../../features/topics/TopicPage';
 import CategoryPage from '../../features/Category/CategoryPage';
-import Subject from '../../features/Subject/Subject';
+import Subject from '../../features/subjects/Subject';
 
 // Utilities
 import { DataContext } from '../../utilities/DataContext';

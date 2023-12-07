@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 
 import { Link } from 'react-router-dom'; // Assuming you're using React Router
+import axios from 'axios';
 
 // Function to generate random number within a range
 const getRandomNumber = (min, max) => {
@@ -147,6 +148,20 @@ export default function Main() {
     });
   }, [boxDimensions]);
 
+  const handleTest = async () => {
+      try {
+        // Call GET API function  
+        const response = await axios.get(`http://localhost:8000/api/subjects`); 
+        // Dispatch action when response data is received
+        console.log('Fetch subjects,needs categories', response.data)
+      } catch (error) {
+        // Handle error if API call fails
+        console.error('Error fetching subjects:', error);
+        // Optionally dispatch an error action
+        // dispatch({ type: types.FETCH_SUBJECTS_ERROR, payload: error });
+      }
+  }
+
 
   return (
     <Box
@@ -201,6 +216,9 @@ export default function Main() {
               alignItems: 'center',
             }}
           >
+            <Button variant="contained" onClick={handleTest} size="large">
+              Explore Details
+            </Button>
             <Button variant="contained" component={Link} to="/subjects" size="large">
               Explore Subjects
             </Button>

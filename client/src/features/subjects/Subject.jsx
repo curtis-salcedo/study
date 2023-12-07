@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as subjectSlice from './subjectSlice';
+import * as subjectsSlice from './subjectsSlice';
+import axios from 'axios';
 
 // Router imports
 import { Link } from 'react-router-dom';
-import SubjectPage from './SubjectPage';
 
 // State Management imports
 import {
-  fetchSubjects,
   addSubjects,
   deleteSubjects,
   setActiveSubject,
@@ -32,9 +31,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Subject() {
   const dispatch = useDispatch();
-  const subjects = useSelector(state => state.subjects);
+
+  const active = useSelector(subjectsSlice.activeSubjectSelected);
+
+  const allSubjects = useSelector(subjectsSlice.selectAllSubjects);
+  
   const activeSubject = useSelector(state => state.activeSubject); // Assuming activeSubject is stored in Redux state
+
   const [showForm, setShowForm] = useState(false);
+
   const [newSubject, setNewSubject] = useState({
     name: '',
     description: '',
@@ -42,8 +47,23 @@ export default function Subject() {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState(null);
 
+  const [ subjects, setSubjects ] = useState([])
+
+  const getSubjects = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/subjects');
+      setSubjects(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+      getSubjects();
+  }, []);
+
   const handleAddSubject = () => {
-    dispatch(subjectSlice.addSubject(newSubject));
+    // dispatch(subjectSlice.addSubject(newSubject));
     dispatch(addSubjects(newSubject));
     setNewSubject({
       name: '',
@@ -59,10 +79,6 @@ export default function Subject() {
       [name]: value,
     });
   };
-
-  useEffect(() => {
-    // Fetch subjects when the component mounts
-  }, []);
 
   const handleDeleteClick = (subject) => {
     setSelectedSubject(subject);
@@ -85,8 +101,6 @@ export default function Subject() {
     // setSelectedSubject(subject);
     dispatch(setActiveSubject({subject}));
   };
-
-  console.log('subjects', subjects)
 
   return (
     <Box

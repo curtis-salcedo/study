@@ -20,7 +20,7 @@ import {
 import CssBaseline from '@mui/material/CssBaseline';
 
 // Components
-import TopicCard from '../../components/Cards/TopicCard';
+import TopicCard from './TopicCard';
 import DefinitionMenu from '../Definition/DefinitionMenu';
 import NoteCard from '../../components/Cards/NoteCard';
 import NotePage from '../Note/NotePage';

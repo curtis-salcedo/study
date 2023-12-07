@@ -1,54 +1,105 @@
 import React from 'react';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import TopicsList from '../topics/TopicsList';
+
+// import {
+//   activeReducer,
+// } from '../../reducers/activeReducer';
+
+import {
+  addTopics,
+} from '../topics/topicsActions'
+
 // Styles
 import {
   Box,
-  Paper,
+  TextField,
+  Button,
 } from '@mui/material';
-
-// Utilities
-import { DataContext } from '../../utilities/DataContext';
-
-// Components
-import TopicCard from '../../components/Cards/TopicCard';
-
-import TopicPage from '../Topic/TopicPage';
-import TopicForm from '../../components/Forms/TopicForm';
+import { Topic } from '@mui/icons-material';
 
 export default function CategoryPage() {
-  const { categoryData, setCategoryData, activeTopic, setActiveTopic, topicsData, activeData } = useContext(DataContext);
+  const dispatch = useDispatch();
+  const activeSubject = useSelector(state => state.activeSubject);
+  const allCategories = useSelector(state => state.categories);
+  const [ showForm, setShowForm ] = useState(false);
+  const [ newTopic, setNewTopic ] = useState({
+    title: '',
+    type: '',
+    description: '',
+    category: '',
+  });
 
-  const [ topic, setTopic ] = useState(false);
+  const [ categories, setCategories ] = useState([])
 
   useEffect(() => {
-    if (activeTopic) {
-      setTopic(false);
-    } else {
-      setTopic(true);
-    }
-  }, [categoryData, activeData, activeTopic]);
+    // Fetch subjects when the component mounts
 
-  console.log('activeData at Category Page', activeData, activeTopic)
+    setCategories(allCategories.filter(category => category.subject === activeSubject.id));
+    
+  }, [activeSubject, categories]);
+
+  const handleSubmit = () => {
+    dispatch(addTopics(newTopic));
+    setNewTopic({
+      subject: activeSubject.id ? activeSubject.id : null,
+      name: '',
+      description: '',
+    });
+    setShowForm(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewTopic({
+      ...newTopic,
+      [name]: value,
+    });
+  };
 
   return (
     <Box
-      sx={{
-        height: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        overflow: 'auto',
-      }}>
-      { activeTopic ? 
-          <TopicPage t={activeTopic} />
-        :
-        <>
-          { activeData.topics ? activeData.topics.map((t) => (
-            <TopicCard t={t} />
-          )) : <TopicForm /> }
-        </>
-      }
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '20px',
+      maxWidth: '600px',
+      width: '100%',
+      margin: 'auto',
+    }}
+  >
+    <TextField
+      label="New Category Name"
+      variant="outlined"
+      name="name"
+      value={newTopic.name}
+      onChange={handleChange}
+      margin="normal"
+      fullWidth
+    />
 
+    <TextField
+      label="Description"
+      variant="outlined"
+      name="description"
+      value={newTopic.description}
+      onChange={handleChange}
+      margin="normal"
+      fullWidth
+      multiline
+      rows={4}
+    />
+      <Button variant="contained" color="primary" onClick={handleSubmit} fullWidth>
+        Add Subject
+      </Button>
+
+      <TopicsList />
+      
     </Box>
   )
 }

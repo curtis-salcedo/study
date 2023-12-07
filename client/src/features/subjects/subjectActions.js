@@ -12,6 +12,7 @@ export const fetchSubjects = () => {
       // Call GET API function  
       const response = await axios.get(`${rootUrl}/subjects`); 
       // Dispatch action when response data is received
+      console.log('Fetch subjects,needs categories', response.data)
       dispatch({
         type: types.FETCH_SUBJECTS,
         payload: response.data // Assuming the response contains an array of subjects

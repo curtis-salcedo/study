@@ -12,7 +12,7 @@ import './index.css';
 
 import store from './app/store'
 import { Provider } from 'react-redux'
-import Subject from './features/Subject/Subject';
+import Subject from './features/subjects/Subject';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root')

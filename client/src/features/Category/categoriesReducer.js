@@ -1,9 +1,9 @@
 import * as types from '../../actions/types';
 
 const categoriesReducer = (state = [], action) => {
-  console.log("This is the state sent to categories reducer =>", state)
-  console.log("This is the action sent to categories reducer =>", action)
-  console.log("This is the action.payload of action sent to categories reducer =>", action.payload)
+  // console.log("This is the state sent to categories reducer =>", state)
+  // console.log("This is the action sent to categories reducer =>", action)
+  // console.log("This is the action.payload of action sent to categories reducer =>", action.payload)
   switch (action.type) {
     // This will be called when an action of type FETCH_SUBJECTS is dispatched
     case types.FETCH_CATEGORIES:

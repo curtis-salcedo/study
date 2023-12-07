@@ -1,15 +1,28 @@
 // subjectSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  subjects: [],
+const initialState = [
+  { id: '',
+    name: '',
+    description: '',
+    category: '',
+  },
+  { id: 1,
+    name: 'Math',
+    description: 'Mathematics',
+    category: 'Mathematics',
+  },
   // Other initial state...
-};
+];
 
-const subjectSlice = createSlice({
+const subjectsSlice = createSlice({
   name: 'subjects',
   initialState,
   reducers: {
+    activeSubjectSelected: (state, action) => {
+      // This will directly modify state in this case
+      state.activeSubject = action.payload;
+    },
     // Action creators go here
     // You can still define action creators to be used in your components
     addSubject: (state, action) => {
@@ -26,8 +39,12 @@ const subjectSlice = createSlice({
   },
 });
 
-export const { addSubject, removeSubject, updateSubject } = subjectSlice.actions;
-export default subjectSlice.reducer;
+export const { addSubject, removeSubject, updateSubject } = subjectsSlice.actions;
+
+export const selectAllSubjects = state => state.subjects;
+export const { activeSubjectSelected } = subjectsSlice.actions;
+
+export default subjectsSlice.reducer;
 
 
 
